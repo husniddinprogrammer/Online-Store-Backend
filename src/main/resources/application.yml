@@ -84,7 +84,7 @@ app:
     base-url: ${BASE_URL:http://localhost:8080}   # used to build public image URLs
     max-file-size-mb: ${UPLOAD_MAX_FILE_SIZE_MB:3}
   seed:
-    enabled: ${SEED_ENABLED:true}
+    enabled: ${SEED_ENABLED:false}
     admin-email: ${ADMIN_EMAIL:admin@online-store.uz}
     admin-password: ${ADMIN_PASSWORD:SuperAdmin@2024}
     admin-name: ${ADMIN_NAME:Super}

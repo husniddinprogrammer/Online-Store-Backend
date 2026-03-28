@@ -374,3 +374,76 @@ Also:
 - Use @Value for upload directory
 - Return full URL instead of file name
 - Add logging for upload
+
+5-TASK
+
+Role: Senior Java backend engineer
+
+Task:
+Update Poster API to accept image file instead of imageLink and process image with fixed 16:9 ratio without losing quality
+
+Requirements:
+
+API Changes:
+- Replace imageLink (String) with image file (MultipartFile)
+- Endpoint: POST /api/posters
+- Accept multipart/form-data
+
+Request:
+- image: file (MultipartFile)
+- link: string (optional)
+
+Validation:
+- Max file size: 3MB
+- Allowed types: jpg, jpeg, png
+
+Image Processing:
+- Use Thumbnailator
+- Enforce 16:9 aspect ratio
+- Resize image to 1280x720 (or similar 16:9 resolution)
+- Keep high quality (outputQuality = 0.9 or higher)
+- Do NOT overly compress
+- Maintain visual quality
+
+Cropping:
+- If image is not 16:9:
+  - Center crop to 16:9 ratio
+  - Then resize
+
+Storage:
+- Save to configurable directory:
+  /uploads/posters
+- Generate unique file name (UUID)
+
+Database:
+- Save generated image URL/path into imageLink field
+
+Logic:
+1. Validate file exists
+2. Validate size (<= 3MB)
+3. Validate type
+4. Crop to 16:9 (center crop)
+5. Resize to 1280x720
+6. Save file
+7. Save Poster entity
+
+Error Handling:
+- File too large → 400
+- Invalid file type → 400
+
+Security:
+- Only ADMIN and SUPER_ADMIN can upload
+
+Output:
+- Updated Controller (multipart handling)
+- Service layer with image processing
+- Cropping + resizing logic
+- Clean production-ready code
+- API example for frontend
+
+Important:
+- Use high-quality processing
+- Avoid distortion (keep aspect ratio)
+- Do not stretch images
+- Make code reusable
+- Use configurable upload path

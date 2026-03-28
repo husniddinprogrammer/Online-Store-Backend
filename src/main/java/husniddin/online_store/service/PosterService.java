@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -19,23 +20,27 @@ public class PosterService {
 
     private final PosterRepository posterRepository;
     private final PosterMapper posterMapper;
+    private final FileStorageService fileStorageService;
 
     @Transactional(readOnly = true)
     public Page<PosterResponse> getAll(Pageable pageable) {
         return posterRepository.findAll(pageable).map(posterMapper::toResponse);
     }
 
-    public PosterResponse create(PosterRequest request) {
+    public PosterResponse create(MultipartFile image, PosterRequest request) {
+        String imageUrl = fileStorageService.storePoster(image);
         Poster poster = Poster.builder()
-                .imageLink(request.getImageLink())
+                .imageLink(imageUrl)
                 .link(request.getLink())
                 .build();
         return posterMapper.toResponse(posterRepository.save(poster));
     }
 
-    public PosterResponse update(Long id, PosterRequest request) {
+    public PosterResponse update(Long id, MultipartFile image, PosterRequest request) {
         Poster poster = findById(id);
-        poster.setImageLink(request.getImageLink());
+        if (image != null && !image.isEmpty()) {
+            poster.setImageLink(fileStorageService.storePoster(image));
+        }
         poster.setLink(request.getLink());
         return posterMapper.toResponse(posterRepository.save(poster));
     }

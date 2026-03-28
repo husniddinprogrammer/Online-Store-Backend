@@ -33,7 +33,7 @@ public class DataSeeder implements CommandLineRunner {
     private final ProductRepository productRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${app.seed.enabled:true}")
+    @Value("${app.seed.enabled:true]}")
     private boolean seedEnabled;
 
     @Value("${app.seed.admin-email}")

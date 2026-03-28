@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -54,6 +58,56 @@ public class FileStorageService {
     /** Convenience overload — stores under the default "products" subdirectory. */
     public String store(MultipartFile file) {
         return store(file, "products");
+    }
+
+    /**
+     * Stores a poster image: center-crops to 16:9, resizes to 1280×720 at 90% quality.
+     * Saves under {@code baseDir/posters/} and returns the public URL.
+     */
+    public String storePoster(MultipartFile file) {
+        log.info("Poster upload started: name='{}', size={}KB, type='{}'",
+                file.getOriginalFilename(), file.getSize() / 1024, file.getContentType());
+
+        validateSize(file);
+        validateType(file);
+
+        String filename  = UUID.randomUUID() + ".jpg";
+        Path   targetDir = Paths.get(baseDir, "posters");
+
+        try {
+            Files.createDirectories(targetDir);
+            Path target = targetDir.resolve(filename);
+
+            BufferedImage original = ImageIO.read(file.getInputStream());
+            if (original == null) {
+                throw new BadRequestException("Cannot read image file: " + file.getOriginalFilename());
+            }
+
+            BufferedImage cropped = centerCropTo16x9(original);
+
+            BufferedImage resized = new BufferedImage(1280, 720, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = resized.createGraphics();
+            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            g.drawImage(cropped, 0, 0, 1280, 720, null);
+            g.dispose();
+
+            Thumbnails.of(resized)
+                    .size(1280, 720)
+                    .keepAspectRatio(false)
+                    .outputFormat("jpg")
+                    .outputQuality(0.90)
+                    .toFile(target.toFile());
+
+            log.info("Poster saved: original={}KB → compressed={}KB ({})",
+                    file.getSize() / 1024, Files.size(target) / 1024, filename);
+
+        } catch (IOException e) {
+            log.error("Failed to process poster '{}': {}", file.getOriginalFilename(), e.getMessage(), e);
+            throw new RuntimeException("Could not store poster image. Please try again.", e);
+        }
+
+        return buildPublicUrl("posters", filename);
     }
 
     // ── Validation ──────────────────────────────────────────────────────────────
@@ -112,6 +166,26 @@ public class FileStorageService {
         }
 
         return buildPublicUrl(subDir, filename);
+    }
+
+    private BufferedImage centerCropTo16x9(BufferedImage img) {
+        int srcW = img.getWidth();
+        int srcH = img.getHeight();
+
+        int targetW, targetH;
+        if (srcW * 9 > srcH * 16) {
+            // wider than 16:9 — crop sides
+            targetH = srcH;
+            targetW = srcH * 16 / 9;
+        } else {
+            // taller than 16:9 — crop top/bottom
+            targetW = srcW;
+            targetH = srcW * 9 / 16;
+        }
+
+        int x = (srcW - targetW) / 2;
+        int y = (srcH - targetH) / 2;
+        return img.getSubimage(x, y, targetW, targetH);
     }
 
     private String buildPublicUrl(String subDir, String filename) {
