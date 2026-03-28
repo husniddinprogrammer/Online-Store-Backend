@@ -22,8 +22,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByPasswordResetToken(String token);
 
     @Query("SELECT u FROM User u WHERE " +
-           "(:search IS NULL OR LOWER(u.name) LIKE LOWER(CONCAT('%', :search, '%')) " +
-           "OR LOWER(u.surname) LIKE LOWER(CONCAT('%', :search, '%')) " +
-           "OR LOWER(u.email) LIKE LOWER(CONCAT('%', :search, '%')))")
+           "(:search IS NULL OR LOWER(u.name) LIKE LOWER(CONCAT('%', cast(:search as String), '%')) " +
+           "OR LOWER(u.surname) LIKE LOWER(CONCAT('%', cast(:search as String), '%')) " +
+           "OR LOWER(u.email) LIKE LOWER(CONCAT('%', cast(:search as String), '%')))")
     Page<User> searchUsers(@Param("search") String search, Pageable pageable);
 }

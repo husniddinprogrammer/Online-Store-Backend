@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p WHERE " +
-           "(:search IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :search, '%'))) AND " +
+           "(:search IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', cast(:search as String), '%'))) AND " +
            "(:categoryId IS NULL OR p.category.id = :categoryId) AND " +
            "(:companyId IS NULL OR p.company.id = :companyId) AND " +
            "(:minPrice IS NULL OR p.sellPrice >= :minPrice) AND " +
@@ -30,4 +30,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByCategoryId(Long categoryId, Pageable pageable);
 
     Page<Product> findByCompanyId(Long companyId, Pageable pageable);
+
+    boolean existsByNameIgnoreCase(String name);
 }

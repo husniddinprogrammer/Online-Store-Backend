@@ -74,6 +74,13 @@ app:
   frontend-url: ${FRONTEND_URL:http://localhost:3000}
   email-verification-expiry-hours: 24
   password-reset-expiry-minutes: 30
+  seed:
+    enabled: ${SEED_ENABLED:true}
+    admin-email: ${ADMIN_EMAIL:admin@online-store.uz}
+    admin-password: ${ADMIN_PASSWORD:SuperAdmin@2024}
+    admin-name: ${ADMIN_NAME:Super}
+    admin-surname: ${ADMIN_SURNAME:Admin}
+    admin-phone: ${ADMIN_PHONE:+998901234567}
 
 springdoc:
   api-docs:
