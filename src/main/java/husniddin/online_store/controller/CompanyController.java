@@ -12,9 +12,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/companies")
@@ -36,22 +38,42 @@ public class CompanyController {
         return ResponseEntity.ok(ApiResponse.success(companyService.getById(id)));
     }
 
-    @PostMapping
+    /**
+     * POST /api/companies
+     * Content-Type: multipart/form-data
+     *
+     * Form fields:
+     *   name  — company name (required)
+     *   image — image file, jpg/jpeg/png, max 3MB (optional)
+     */
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     @SecurityRequirement(name = "bearerAuth")
-    @Operation(summary = "Create company")
-    public ResponseEntity<ApiResponse<CompanyResponse>> create(@Valid @RequestBody CompanyRequest request) {
+    @Operation(summary = "Create company with optional image upload")
+    public ResponseEntity<ApiResponse<CompanyResponse>> create(
+            @Valid @RequestPart("data") CompanyRequest request,
+            @RequestParam(value = "image", required = false) MultipartFile image) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.success("Company created", companyService.create(request)));
+                .body(ApiResponse.success("Company created", companyService.create(request, image)));
     }
 
-    @PutMapping("/{id}")
+    /**
+     * PUT /api/companies/{id}
+     * Content-Type: multipart/form-data
+     *
+     * Form fields:
+     *   name  — updated name (required)
+     *   image — new image file, jpg/jpeg/png, max 3MB (optional — omit to keep existing image)
+     */
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     @SecurityRequirement(name = "bearerAuth")
-    @Operation(summary = "Update company")
+    @Operation(summary = "Update company with optional image replacement")
     public ResponseEntity<ApiResponse<CompanyResponse>> update(
-            @PathVariable Long id, @Valid @RequestBody CompanyRequest request) {
-        return ResponseEntity.ok(ApiResponse.success(companyService.update(id, request)));
+            @PathVariable Long id,
+            @Valid @RequestPart("data") CompanyRequest request,
+            @RequestParam(value = "image", required = false) MultipartFile image) {
+        return ResponseEntity.ok(ApiResponse.success(companyService.update(id, request, image)));
     }
 
     @DeleteMapping("/{id}")

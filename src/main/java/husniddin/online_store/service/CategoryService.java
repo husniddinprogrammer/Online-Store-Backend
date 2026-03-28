@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private final FileStorageService fileStorageService;
 
     @Transactional(readOnly = true)
     @Cacheable("categories")
@@ -35,22 +37,25 @@ public class CategoryService {
     }
 
     @CacheEvict(value = "categories", allEntries = true)
-    public CategoryResponse create(CategoryRequest request) {
+    public CategoryResponse create(CategoryRequest request, MultipartFile image) {
         if (categoryRepository.existsByName(request.getName())) {
             throw new BadRequestException("Category already exists: " + request.getName());
         }
+        String imageLink = hasFile(image) ? fileStorageService.store(image, "categories") : null;
         Category category = Category.builder()
                 .name(request.getName())
-                .imageLink(request.getImageLink())
+                .imageLink(imageLink)
                 .build();
         return categoryMapper.toResponse(categoryRepository.save(category));
     }
 
     @CacheEvict(value = "categories", allEntries = true)
-    public CategoryResponse update(Long id, CategoryRequest request) {
+    public CategoryResponse update(Long id, CategoryRequest request, MultipartFile image) {
         Category category = findById(id);
         category.setName(request.getName());
-        category.setImageLink(request.getImageLink());
+        if (hasFile(image)) {
+            category.setImageLink(fileStorageService.store(image, "categories"));
+        }
         return categoryMapper.toResponse(categoryRepository.save(category));
     }
 
@@ -64,5 +69,9 @@ public class CategoryService {
     private Category findById(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", id));
+    }
+
+    private boolean hasFile(MultipartFile file) {
+        return file != null && !file.isEmpty();
     }
 }

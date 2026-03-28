@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,7 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
     private final CompanyMapper companyMapper;
+    private final FileStorageService fileStorageService;
 
     @Transactional(readOnly = true)
     public Page<CompanyResponse> getAll(Pageable pageable) {
@@ -31,21 +33,24 @@ public class CompanyService {
         return companyMapper.toResponse(findById(id));
     }
 
-    public CompanyResponse create(CompanyRequest request) {
+    public CompanyResponse create(CompanyRequest request, MultipartFile image) {
         if (companyRepository.existsByName(request.getName())) {
             throw new BadRequestException("Company already exists: " + request.getName());
         }
+        String imageLink = hasFile(image) ? fileStorageService.store(image, "companies") : null;
         Company company = Company.builder()
                 .name(request.getName())
-                .imageLink(request.getImageLink())
+                .imageLink(imageLink)
                 .build();
         return companyMapper.toResponse(companyRepository.save(company));
     }
 
-    public CompanyResponse update(Long id, CompanyRequest request) {
+    public CompanyResponse update(Long id, CompanyRequest request, MultipartFile image) {
         Company company = findById(id);
         company.setName(request.getName());
-        company.setImageLink(request.getImageLink());
+        if (hasFile(image)) {
+            company.setImageLink(fileStorageService.store(image, "companies"));
+        }
         return companyMapper.toResponse(companyRepository.save(company));
     }
 
@@ -58,5 +63,9 @@ public class CompanyService {
     private Company findById(Long id) {
         return companyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Company", id));
+    }
+
+    private boolean hasFile(MultipartFile file) {
+        return file != null && !file.isEmpty();
     }
 }

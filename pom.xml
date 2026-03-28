@@ -112,6 +112,13 @@
             <version>${mapstruct.version}</version>
         </dependency>
 
+        <!-- Thumbnailator - image resizing & compression -->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.20</version>
+        </dependency>
+
         <!-- SpringDoc OpenAPI / Swagger UI -->
         <dependency>
             <groupId>org.springdoc</groupId>

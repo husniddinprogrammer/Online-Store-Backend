@@ -236,3 +236,141 @@ Also generate:
 - Swagger/OpenAPI specification
 - Example curl requests
 - Frontend usage examples (fetch/axios)
+
+3-TASK
+
+Role: Senior Java backend engineer
+
+Task:
+Add image resizing, compression, and file size validation to file upload API
+
+Requirements:
+
+File Upload:
+- Accept multiple images (MultipartFile)
+- Maximum file size per image: 3MB
+- Validate file size BEFORE processing
+- Validate file type (jpg, jpeg, png only)
+
+Image Processing:
+- Use Thumbnailator library
+- Resize image to max 800x800
+- Keep aspect ratio
+- Compress quality to 70%
+- Convert output format to jpg (optional but recommended)
+
+Storage:
+- Generate unique file names (UUID)
+- Save images to configurable directory (e.g. /uploads/products)
+- Do NOT use hardcoded paths (use application.yml or @Value)
+
+Database:
+- Save each image to ProductImage table:
+  - product (ManyToOne)
+  - imageLink (URL/path)
+  - isMain (boolean)
+
+Logic:
+1. Validate product exists
+2. Validate file size (<= 3MB)
+3. Validate file type
+4. Resize and compress image
+5. Save file
+6. Save DB record
+
+Error Handling:
+- File too large (>3MB) → return 400
+- Invalid file type → return 400
+- Product not found → return 404
+
+Security:
+- Only ADMIN and SUPER_ADMIN can upload images
+
+Output:
+- Updated service class
+- File processing method
+- Validation logic
+- Clean, production-ready code
+
+Important:
+- Use best practices
+- Make code modular and reusable
+- Avoid duplication
+- Think like a senior engineer
+Also:
+- Create reusable FileStorageService
+- Use @Value for upload directory
+- Return full URL instead of file name
+- Add logging for upload
+
+4-TASK
+
+Role: Senior Java backend engineer
+
+Task:
+Update Category and Company creation APIs to accept image file instead of imageLink string
+
+Requirements:
+
+API Changes:
+- Accept multipart/form-data
+- Replace imageLink (String) with image file (MultipartFile)
+
+Endpoints:
+- POST /api/categories
+- POST /api/companies
+
+Request:
+- name: string
+- image: file (MultipartFile)
+
+Validation:
+- Max file size: 3MB
+- Allowed types: jpg, jpeg, png
+
+Image Processing:
+- Use Thumbnailator
+- Resize image to max 800x800
+- Compress to 70% quality
+- Keep aspect ratio
+
+Storage:
+- Save images to configurable folder:
+  /uploads/categories
+  /uploads/companies
+- Generate unique file name (UUID)
+
+Database:
+- Save generated image URL/path into imageLink field
+
+Logic:
+1. Validate request
+2. Validate file
+3. Resize and compress image
+4. Save file to disk
+5. Save entity with imageLink
+
+Error Handling:
+- File too large → 400
+- Invalid type → 400
+
+Security:
+- Only ADMIN and SUPER_ADMIN can create
+
+Output:
+- Updated Controller (multipart handling)
+- Service layer
+- File upload utility
+- Clean production-ready code
+- Api Example for Frontend
+
+Important:
+- Do NOT break existing structure
+- Use clean architecture
+- Avoid duplicated code (reuse upload logic)
+
+Also:
+- Create reusable FileStorageService
+- Use @Value for upload directory
+- Return full URL instead of file name
+- Add logging for upload

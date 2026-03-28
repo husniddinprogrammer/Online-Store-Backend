@@ -12,9 +12,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -36,22 +38,42 @@ public class CategoryController {
         return ResponseEntity.ok(ApiResponse.success(categoryService.getById(id)));
     }
 
-    @PostMapping
+    /**
+     * POST /api/categories
+     * Content-Type: multipart/form-data
+     *
+     * Form fields:
+     *   name  — category name (required)
+     *   image — image file, jpg/jpeg/png, max 3MB (optional)
+     */
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     @SecurityRequirement(name = "bearerAuth")
-    @Operation(summary = "Create category")
-    public ResponseEntity<ApiResponse<CategoryResponse>> create(@Valid @RequestBody CategoryRequest request) {
+    @Operation(summary = "Create category with optional image upload")
+    public ResponseEntity<ApiResponse<CategoryResponse>> create(
+            @Valid @RequestPart("data") CategoryRequest request,
+            @RequestParam(value = "image", required = false) MultipartFile image) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.success("Category created", categoryService.create(request)));
+                .body(ApiResponse.success("Category created", categoryService.create(request, image)));
     }
 
-    @PutMapping("/{id}")
+    /**
+     * PUT /api/categories/{id}
+     * Content-Type: multipart/form-data
+     *
+     * Form fields:
+     *   name  — updated name (required)
+     *   image — new image file, jpg/jpeg/png, max 3MB (optional — omit to keep existing image)
+     */
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     @SecurityRequirement(name = "bearerAuth")
-    @Operation(summary = "Update category")
+    @Operation(summary = "Update category with optional image replacement")
     public ResponseEntity<ApiResponse<CategoryResponse>> update(
-            @PathVariable Long id, @Valid @RequestBody CategoryRequest request) {
-        return ResponseEntity.ok(ApiResponse.success(categoryService.update(id, request)));
+            @PathVariable Long id,
+            @Valid @RequestPart("data") CategoryRequest request,
+            @RequestParam(value = "image", required = false) MultipartFile image) {
+        return ResponseEntity.ok(ApiResponse.success(categoryService.update(id, request, image)));
     }
 
     @DeleteMapping("/{id}")

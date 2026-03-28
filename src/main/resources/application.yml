@@ -56,6 +56,11 @@ spring:
           starttls:
             enable: true
 
+  servlet:
+    multipart:
+      max-file-size: 10MB       # Spring hard limit; business logic enforces 3MB per file
+      max-request-size: 50MB    # max total upload per request
+
   jackson:
     serialization:
       write-dates-as-timestamps: false
@@ -74,6 +79,10 @@ app:
   frontend-url: ${FRONTEND_URL:http://localhost:3000}
   email-verification-expiry-hours: 24
   password-reset-expiry-minutes: 30
+  upload:
+    base-dir: ${UPLOAD_BASE_DIR:uploads}          # root upload directory; subdirs: products, categories, companies
+    base-url: ${BASE_URL:http://localhost:8080}   # used to build public image URLs
+    max-file-size-mb: ${UPLOAD_MAX_FILE_SIZE_MB:3}
   seed:
     enabled: ${SEED_ENABLED:true}
     admin-email: ${ADMIN_EMAIL:admin@online-store.uz}
