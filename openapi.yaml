@@ -1,0 +1,1697 @@
+openapi: 3.0.3
+info:
+  title: Online Store API
+  version: "1.0"
+  description: Production-grade E-Commerce REST API
+  contact:
+    name: Husniddin
+    email: admin@online-store.uz
+
+servers:
+  - url: http://localhost:8080
+    description: Development server
+  - url: https://api.online-store.uz
+    description: Production server
+
+security: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "JWT token. Format: Bearer <token>"
+
+  schemas:
+    # ─── GENERIC ───────────────────────────────────────────────
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+          nullable: true
+        data:
+          nullable: true
+        timestamp:
+          type: string
+          format: date-time
+
+    ProblemDetail:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        timestamp:
+          type: string
+        errors:
+          type: object
+          additionalProperties:
+            type: string
+
+    PageMeta:
+      type: object
+      properties:
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+        size:
+          type: integer
+        number:
+          type: integer
+
+    # ─── AUTH ──────────────────────────────────────────────────
+    RegisterRequest:
+      type: object
+      required: [name, surname, email, password]
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 100
+          example: Husniddin
+        surname:
+          type: string
+          minLength: 2
+          maxLength: 100
+          example: Toshmatov
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          minLength: 8
+          example: Password123
+          description: "Must contain uppercase, lowercase, and digit"
+        birthdayAt:
+          type: string
+          format: date
+          example: "1998-05-20"
+        phoneNumber:
+          type: string
+          example: "+998901234567"
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          example: Password123
+
+    AuthResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        tokenType:
+          type: string
+          example: Bearer
+        expiresIn:
+          type: integer
+          format: int64
+          example: 900000
+        userId:
+          type: integer
+          format: int64
+        email:
+          type: string
+        name:
+          type: string
+        role:
+          $ref: '#/components/schemas/Role'
+
+    Role:
+      type: string
+      enum: [SUPER_ADMIN, ADMIN, DELIVERY, CUSTOMER]
+
+    # ─── USER ──────────────────────────────────────────────────
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        surname:
+          type: string
+        email:
+          type: string
+        birthdayAt:
+          type: string
+          format: date
+        phoneNumber:
+          type: string
+        balance:
+          type: number
+          format: decimal
+        blocked:
+          type: boolean
+        role:
+          $ref: '#/components/schemas/Role'
+        lastLoginAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        emailVerified:
+          type: boolean
+
+    # ─── CATEGORY ──────────────────────────────────────────────
+    CategoryRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          example: Smartphones
+        imageLink:
+          type: string
+          example: https://cdn.example.com/phones.png
+
+    CategoryResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        imageLink:
+          type: string
+
+    # ─── COMPANY ───────────────────────────────────────────────
+    CompanyRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          example: Apple
+        imageLink:
+          type: string
+
+    CompanyResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        imageLink:
+          type: string
+
+    # ─── PRODUCT ───────────────────────────────────────────────
+    ProductRequest:
+      type: object
+      required: [name, stockQuantity, categoryId, companyId, arrivalPrice, sellPrice]
+      properties:
+        name:
+          type: string
+          example: iPhone 15 Pro
+        description:
+          type: string
+        discountPercent:
+          type: number
+          format: decimal
+          minimum: 0
+          maximum: 100
+          example: 10.00
+        stockQuantity:
+          type: integer
+          minimum: 0
+          example: 50
+        categoryId:
+          type: integer
+          format: int64
+          example: 1
+        companyId:
+          type: integer
+          format: int64
+          example: 1
+        arrivalPrice:
+          type: number
+          format: decimal
+          example: 9000000.00
+        sellPrice:
+          type: number
+          format: decimal
+          example: 10000000.00
+
+    ProductImageResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        imageLink:
+          type: string
+        isMain:
+          type: boolean
+
+    ProductResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        discountPercent:
+          type: number
+        stockQuantity:
+          type: integer
+        soldQuantity:
+          type: integer
+        category:
+          $ref: '#/components/schemas/CategoryResponse'
+        company:
+          $ref: '#/components/schemas/CompanyResponse'
+        arrivalPrice:
+          type: number
+        sellPrice:
+          type: number
+        discountedPrice:
+          type: number
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductImageResponse'
+        averageRating:
+          type: number
+          format: double
+          nullable: true
+
+    # ─── ORDER ─────────────────────────────────────────────────
+    OrderStatus:
+      type: string
+      enum: [PENDING, PAID, SHIPPED, DELIVERED, CANCELLED]
+
+    CreateOrderRequest:
+      type: object
+      required: [addressId]
+      properties:
+        addressId:
+          type: integer
+          format: int64
+          example: 1
+        note:
+          type: string
+
+    OrderItemResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        productId:
+          type: integer
+          format: int64
+        productName:
+          type: string
+        productImageLink:
+          type: string
+        quantity:
+          type: integer
+        price:
+          type: number
+        totalPrice:
+          type: number
+
+    OrderResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        userName:
+          type: string
+        totalAmount:
+          type: number
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        createdAt:
+          type: string
+          format: date-time
+        deliveryAddress:
+          $ref: '#/components/schemas/AddressResponse'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItemResponse'
+
+    # ─── CART ──────────────────────────────────────────────────
+    AddToCartRequest:
+      type: object
+      required: [productId, quantity]
+      properties:
+        productId:
+          type: integer
+          format: int64
+          example: 1
+        quantity:
+          type: integer
+          minimum: 1
+          example: 2
+
+    CartItemResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        productId:
+          type: integer
+          format: int64
+        productName:
+          type: string
+        productImageLink:
+          type: string
+        productPrice:
+          type: number
+        quantity:
+          type: integer
+        totalPrice:
+          type: number
+
+    CartResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItemResponse'
+        totalAmount:
+          type: number
+        totalItems:
+          type: integer
+
+    # ─── COMMENT ───────────────────────────────────────────────
+    CommentRequest:
+      type: object
+      required: [productId, text, rating]
+      properties:
+        productId:
+          type: integer
+          format: int64
+        text:
+          type: string
+          maxLength: 2000
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+
+    CommentResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        productId:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        userName:
+          type: string
+        userSurname:
+          type: string
+        text:
+          type: string
+        rating:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+
+    # ─── ADDRESS ───────────────────────────────────────────────
+    RegionType:
+      type: string
+      enum: [TASHKENT_CITY, TASHKENT_REGION, ANDIJAN, FERGANA, NAMANGAN,
+             SAMARKAND, BUKHARA, NAVOI, KASHKADARYA, SURKHANDARYA,
+             JIZZAKH, SIRDARYA, KHOREZM, KARAKALPAKSTAN]
+
+    AddressRequest:
+      type: object
+      required: [regionType, cityType]
+      properties:
+        regionType:
+          $ref: '#/components/schemas/RegionType'
+        cityType:
+          type: string
+          example: TASHKENT
+        homeNumber:
+          type: string
+          example: "45"
+        roomNumber:
+          type: string
+          example: "12"
+
+    AddressResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        regionType:
+          $ref: '#/components/schemas/RegionType'
+        cityType:
+          type: string
+        homeNumber:
+          type: string
+        roomNumber:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    # ─── NOTIFICATION ──────────────────────────────────────────
+    NotificationResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum: [INFO, WARNING, ERROR]
+        text:
+          type: string
+        isSeen:
+          type: boolean
+
+    # ─── PAYMENT ───────────────────────────────────────────────
+    PaymentRequest:
+      type: object
+      required: [orderId, method]
+      properties:
+        orderId:
+          type: integer
+          format: int64
+        method:
+          type: string
+          enum: [CARD, CASH]
+
+    PaymentResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        orderId:
+          type: integer
+          format: int64
+        amount:
+          type: number
+        method:
+          type: string
+        status:
+          type: string
+          enum: [PAID, FAILED]
+        createdAt:
+          type: string
+          format: date-time
+
+    # ─── POSTER ────────────────────────────────────────────────
+    PosterRequest:
+      type: object
+      required: [imageLink]
+      properties:
+        imageLink:
+          type: string
+        link:
+          type: string
+
+    PosterResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        imageLink:
+          type: string
+        clickQuantity:
+          type: integer
+          format: int64
+        link:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+# ─── PATHS ─────────────────────────────────────────────────────────────────────
+paths:
+
+  # AUTH
+  /api/auth/register:
+    post:
+      tags: [Authentication]
+      summary: Register new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        "201":
+          description: User registered
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/AuthResponse'
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetail'
+        "409":
+          description: Email already exists
+
+  /api/auth/login:
+    post:
+      tags: [Authentication]
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        "200":
+          description: Logged in
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/AuthResponse'
+        "401":
+          description: Invalid credentials
+
+  /api/auth/refresh-token:
+    post:
+      tags: [Authentication]
+      summary: Refresh access token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        "200":
+          description: New access token
+        "401":
+          description: Invalid or expired refresh token
+
+  /api/auth/logout:
+    post:
+      tags: [Authentication]
+      summary: Logout
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        "200":
+          description: Logged out
+
+  /api/auth/verify-email:
+    get:
+      tags: [Authentication]
+      summary: Verify email
+      parameters:
+        - name: token
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Email verified
+        "400":
+          description: Invalid or expired token
+
+  /api/auth/forgot-password:
+    post:
+      tags: [Authentication]
+      summary: Request password reset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        "200":
+          description: Reset email sent
+
+  /api/auth/reset-password:
+    post:
+      tags: [Authentication]
+      summary: Reset password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                newPassword:
+                  type: string
+      responses:
+        "200":
+          description: Password reset successful
+
+  # USERS
+  /api/users/me:
+    get:
+      tags: [Users]
+      summary: Get current user
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Current user profile
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/UserResponse'
+    put:
+      tags: [Users]
+      summary: Update current user
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                surname:
+                  type: string
+                birthdayAt:
+                  type: string
+                  format: date
+                phoneNumber:
+                  type: string
+      responses:
+        "200":
+          description: Updated user
+
+  /api/users/me/change-password:
+    put:
+      tags: [Users]
+      summary: Change password
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currentPassword:
+                  type: string
+                newPassword:
+                  type: string
+      responses:
+        "200":
+          description: Password changed
+        "400":
+          description: Current password incorrect
+
+  /api/users:
+    get:
+      tags: [Users]
+      summary: Get all users (Admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: Paginated users
+        "403":
+          description: Forbidden
+
+  /api/users/{id}/block:
+    patch:
+      tags: [Users]
+      summary: Block user (Admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: User blocked
+
+  /api/users/{id}/unblock:
+    patch:
+      tags: [Users]
+      summary: Unblock user (Admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: User unblocked
+
+  /api/users/{id}/role:
+    patch:
+      tags: [Users]
+      summary: Change user role (SuperAdmin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: role
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Role'
+      responses:
+        "200":
+          description: Role updated
+
+  # PRODUCTS
+  /api/products:
+    get:
+      tags: [Products]
+      summary: Get products (public)
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: categoryId
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: companyId
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: minPrice
+          in: query
+          schema:
+            type: number
+        - name: maxPrice
+          in: query
+          schema:
+            type: number
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: sort
+          in: query
+          schema:
+            type: string
+            example: createdAt,desc
+      responses:
+        "200":
+          description: Paginated products
+    post:
+      tags: [Products]
+      summary: Create product (Admin)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        "201":
+          description: Product created
+        "403":
+          description: Forbidden
+
+  /api/products/{id}:
+    get:
+      tags: [Products]
+      summary: Get product by ID (public)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Product found
+        "404":
+          description: Not found
+    put:
+      tags: [Products]
+      summary: Update product (Admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        "200":
+          description: Updated
+    delete:
+      tags: [Products]
+      summary: Delete product (Admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Deleted
+
+  # CATEGORIES
+  /api/categories:
+    get:
+      tags: [Categories]
+      summary: Get all categories
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: size
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Category list
+    post:
+      tags: [Categories]
+      summary: Create category (Admin)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+      responses:
+        "201":
+          description: Created
+
+  /api/categories/{id}:
+    get:
+      tags: [Categories]
+      summary: Get category by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Category
+    put:
+      tags: [Categories]
+      summary: Update category (Admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+      responses:
+        "200":
+          description: Updated
+    delete:
+      tags: [Categories]
+      summary: Delete category (Admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+
+  # ORDERS
+  /api/orders:
+    post:
+      tags: [Orders]
+      summary: Create order from cart
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        "201":
+          description: Order created
+        "400":
+          description: Cart empty / insufficient stock
+    get:
+      tags: [Orders]
+      summary: Get all orders (Admin/Delivery)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/OrderStatus'
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: size
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Orders
+
+  /api/orders/my:
+    get:
+      tags: [Orders]
+      summary: Get my orders
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/OrderStatus'
+      responses:
+        "200":
+          description: My orders
+
+  /api/orders/my/{id}:
+    get:
+      tags: [Orders]
+      summary: Get my order by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Order
+
+  /api/orders/my/{id}/cancel:
+    patch:
+      tags: [Orders]
+      summary: Cancel my order
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Order cancelled
+        "400":
+          description: Can only cancel PENDING orders
+
+  /api/orders/{id}/status:
+    patch:
+      tags: [Orders]
+      summary: Update order status (Admin/Delivery)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/OrderStatus'
+      responses:
+        "200":
+          description: Status updated
+
+  # CART
+  /api/carts:
+    get:
+      tags: [Cart]
+      summary: Get my cart
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Cart contents
+    delete:
+      tags: [Cart]
+      summary: Clear cart
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Cart cleared
+
+  /api/carts/items:
+    post:
+      tags: [Cart]
+      summary: Add item to cart
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddToCartRequest'
+      responses:
+        "200":
+          description: Updated cart
+
+  /api/carts/items/{cartItemId}:
+    patch:
+      tags: [Cart]
+      summary: Update cart item quantity
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: cartItemId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: quantity
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Updated cart
+    delete:
+      tags: [Cart]
+      summary: Remove cart item
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: cartItemId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Item removed
+
+  # PAYMENTS
+  /api/payments:
+    post:
+      tags: [Payments]
+      summary: Process payment
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        "200":
+          description: Payment processed
+
+  /api/payments/order/{orderId}:
+    get:
+      tags: [Payments]
+      summary: Get payment by order ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Payment details
+
+  # COMMENTS
+  /api/comments/product/{productId}:
+    get:
+      tags: [Comments]
+      summary: Get product reviews (public)
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: size
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Reviews
+
+  /api/comments:
+    post:
+      tags: [Comments]
+      summary: Write a review
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequest'
+      responses:
+        "201":
+          description: Review created
+        "400":
+          description: Already reviewed
+
+  /api/comments/{id}:
+    put:
+      tags: [Comments]
+      summary: Update your review
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequest'
+      responses:
+        "200":
+          description: Updated
+    delete:
+      tags: [Comments]
+      summary: Delete your review
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+
+  # ADDRESSES
+  /api/addresses:
+    get:
+      tags: [Addresses]
+      summary: Get my addresses
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Address list
+    post:
+      tags: [Addresses]
+      summary: Create address
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressRequest'
+      responses:
+        "201":
+          description: Address created
+
+  /api/addresses/{id}:
+    put:
+      tags: [Addresses]
+      summary: Update address
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressRequest'
+      responses:
+        "200":
+          description: Updated
+    delete:
+      tags: [Addresses]
+      summary: Delete address
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+
+  # NOTIFICATIONS
+  /api/notifications:
+    get:
+      tags: [Notifications]
+      summary: Get my notifications
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: size
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Notifications
+
+  /api/notifications/unseen-count:
+    get:
+      tags: [Notifications]
+      summary: Get unseen count
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Count
+
+  /api/notifications/{id}/seen:
+    patch:
+      tags: [Notifications]
+      summary: Mark as seen
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Marked
+
+  /api/notifications/seen-all:
+    patch:
+      tags: [Notifications]
+      summary: Mark all as seen
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: All marked
+
+  /api/notifications/{id}:
+    delete:
+      tags: [Notifications]
+      summary: Delete notification
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+
+  # FAVORITES
+  /api/favorite-products:
+    get:
+      tags: [Favorites]
+      summary: Get my favorites
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Favorite products
+
+  /api/favorite-products/{productId}:
+    post:
+      tags: [Favorites]
+      summary: Add to favorites
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Added
+        "400":
+          description: Already in favorites
+    delete:
+      tags: [Favorites]
+      summary: Remove from favorites
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Removed
+
+  # POSTERS
+  /api/posters:
+    get:
+      tags: [Posters]
+      summary: Get all posters (public)
+      responses:
+        "200":
+          description: Posters
+    post:
+      tags: [Posters]
+      summary: Create poster (Admin)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PosterRequest'
+      responses:
+        "201":
+          description: Created
+
+  /api/posters/{id}/click:
+    post:
+      tags: [Posters]
+      summary: Track poster click
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Click recorded
+
+  /api/posters/{id}:
+    put:
+      tags: [Posters]
+      summary: Update poster (Admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PosterRequest'
+      responses:
+        "200":
+          description: Updated
+    delete:
+      tags: [Posters]
+      summary: Delete poster (Admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+
+  # PRODUCT IMAGES
+  /api/product-images/product/{productId}:
+    get:
+      tags: [Product Images]
+      summary: Get product images
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Images
+    post:
+      tags: [Product Images]
+      summary: Add product image (Admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: imageLink
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: isMain
+          in: query
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "201":
+          description: Image added
+
+  /api/product-images/{imageId}/main:
+    patch:
+      tags: [Product Images]
+      summary: Set main image (Admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: imageId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Main image set
+
+  /api/product-images/{imageId}:
+    delete:
+      tags: [Product Images]
+      summary: Delete product image (Admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: imageId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+
+tags:
+  - name: Authentication
+  - name: Users
+  - name: Products
+  - name: Categories
+  - name: Companies
+  - name: Orders
+  - name: Cart
+  - name: Payments
+  - name: Comments
+  - name: Addresses
+  - name: Notifications
+  - name: Favorites
+  - name: Posters
+  - name: Product Images

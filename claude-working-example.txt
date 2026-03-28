@@ -205,3 +205,34 @@ Output:
 - Exception handling
 - Sample API requests/responses
 - Explanation of architecture
+
+2-TASK
+
+Role: Senior backend engineer
+
+Task:
+Generate full API documentation for frontend integration.
+
+Requirements:
+- List all endpoints
+- Include HTTP methods (GET, POST, PUT, DELETE)
+- Include request body (JSON)
+- Include response format
+- Include error responses
+- Include authentication requirements (JWT)
+- Use clean and consistent structure
+
+Format:
+For each endpoint provide:
+- URL
+- Method
+- Description
+- Request body
+- Response example
+- Error example
+
+System:
+Also generate:
+- Swagger/OpenAPI specification
+- Example curl requests
+- Frontend usage examples (fetch/axios)
