@@ -1,0 +1,207 @@
+1-TASK
+
+Role: Senior Java backend engineer + system architect
+Context:
+We are building a production-grade e-commerce web application using Java and Spring Boot. The system must be scalable, secure, and maintainable, supporting concurrent users and real-world business operations.
+Tech Stack:
+- Java 17+
+- Spring Boot
+- Spring Web
+- Spring Data JPA (Hibernate)
+- PostgreSQL
+- Spring Security
+- JWT (Access + Refresh tokens)
+- Lombok
+- MapStruct
+- Redis (caching)
+- Flyway
+Core Features:
+- Authentication (register, login, refresh token)
+- Role-based access (SUPER_ADMIN, ADMIN, DELIVERY, CUSTOMER)
+- Product management
+- Order system with multiple items
+- Cart system 
+- Notifications
+- Reviews & ratings
+Database Rules:
+- Use ISO 8601 datetime format
+- Use proper relationships (OneToMany, ManyToOne)
+Types: 
+-Role: SUPER_ADMIN, ADMIN, DELIVERY, CUSTOMER
+- Pay: CARD,CASH
+- Region: Uzbekistan All Regions
+- City: Uzbekistan All City
+- OrderStatus: PENDING,PAID, SHIPPED, DELIVERED, CANCELLED
+- NotificationType: INFO, WARNING, ERROR
+Entities:
+User
+-  id, name , surname, email UNIQUE INDEX, password 
+- birthdayAt
+- phoneNumber
+- balance (BigDecimal)
+- blocked (boolean)
+- role (enum)
+- lastLoginAt
+- createdAt
+- isDeleted
+ Company 
+-id, name, isDeleted(type boolean), imageLink
+Category 
+- id, name, imageLink, isDeleted(type boolean)
+Product 
+- id, name INDEX, description 
+- discountPercent
+- stockQuantity
+- soldQuantity
+- category (ManyToOne)
+- company (ManyToOne)
+- arrivalPrice (BigDecimal)
+- sellPrice (BigDecimal)
+- isDeleted(type boolean)
+-createdAt
+-updatedAt
+-createdBy
+-updatedBy
+Order
+- id
+- user (ManyToOne)
+- totalAmount (BigDecimal)
+- status (enum)
+- createdAt
+- isDeleted (type boolean)
+
+OrderItem
+- id
+- order (ManyToOne)
+- product (ManyToOne)
+- quantity
+- price
+- isDeleted(type Boolean) 
+Cart
+- id
+- user  (ManyToOne)
+- isDeleted
+
+CartItem
+- id
+- cart (ManyToOne)
+- product (ManyToOne)
+- quantity
+-isDeleted(type boolean)
+FavoriteProduct 
+-id
+-product (ManyToOne)
+- user (ManyToOne) 
+- isDeleted(type boolean)
+Comment 
+-id
+-product (ManyToOne)
+- user (ManyToOne) 
+- text, rating (1–5 constraint), createdAt, isDeleted(type boolean)
+Address 
+- id, regionType(enum)
+- user (ManyToOne)
+- cityType (enum)
+- homeNumber, roomNumber, isDeleted(type boolean), createdAt
+Notification 
+-id
+- type(enum)
+- user (ManyToOne)
+- text, isSeen(type boolean), isDeleted(type boolean)
+Poster 
+-id, imageLink, clickQuantity, createdAt, link, isDeleted(type boolean)
+ProductImage 
+- id 
+-product (ManyToOne)
+-imageLink  
+- isMain (boolean)
+Payment
+- id
+- order (ManyToOne)
+- amount
+- method (CARD, CASH)
+- status (PAID, FAILED)
+- createdAt
+Log
+- id
+- entityName
+- entityId
+- action (CREATE, UPDATE, DELETE)
+- oldValue (JSON)
+- newValue (JSON)
+- performedBy (User)
+- createdAt
+Requirements:
+1. Architecture:
+- Layered architecture:
+  - controller
+  - service
+  - repository
+  - dto
+  - mapper
+  - config
+  - security
+  - exception
+- Follow SOLID principles
+- Clean Code
+2. API Design:
+- RESTful endpoints:
+  /api/auth
+  /api/users
+  /api/products
+  /api/categories
+  /api/companies
+  /api/orders
+  /api/carts
+  /api/favorite-products
+  /api/comments
+  /api/addresses
+  /api/notifications
+  /api/posters
+  /api/product-images
+3. Security:
+- Spring Security + JWT
+- Password encoding (BCryptPasswordEncoder)
+- Role-based access control
+- Filter for JWT validation
+-Refresh token storage (DB yoki Redis) 
+- Email verification 
+- Password reset flow
+
+
+4. Validation:
+- Bean Validation (Jakarta Validation)
+- DTO validation
+
+5. Error Handling:
+- @ControllerAdvice global exception handler
+- Custom exceptions
+
+6. Performance:
+- Pagination (Pageable)
+- Sorting & filtering
+- Redis caching (optional)
+
+7. Logging:
+- SLF4J + Logback
+
+8. Testing:
+- JUnit + Mockito
+
+9. Configuration:
+- application.yml
+- Profiles (dev, prod)
+
+
+Output:
+- Full project structure
+- Entity classes
+- Entities with relationships
+- Repository interfaces
+- Service layer example
+- Controller example
+- Security config (JWT)
+- DTO + Mapper example
+- Exception handling
+- Sample API requests/responses
+- Explanation of architecture
