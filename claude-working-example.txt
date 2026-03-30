@@ -1,3 +1,4 @@
+./mvnw spring-boot:run
 1-TASK
 
 Role: Senior Java backend engineer + system architect

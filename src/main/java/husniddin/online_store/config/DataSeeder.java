@@ -33,7 +33,7 @@ public class DataSeeder implements CommandLineRunner {
     private final ProductRepository productRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${app.seed.enabled:true]}")
+    @Value("${app.seed.enabled:true}")
     private boolean seedEnabled;
 
     @Value("${app.seed.admin-email}")
@@ -63,51 +63,51 @@ public class DataSeeder implements CommandLineRunner {
 
         seedSuperAdmin();
 
-        Category phones  = seedCategory("Smartphones",  "https://cdn.online-store.uz/categories/smartphones.png");
-        Category laptops = seedCategory("Laptops",       "https://cdn.online-store.uz/categories/laptops.png");
+        // Category phones  = seedCategory("Smartphones",  "https://cdn.online-store.uz/categories/smartphones.png");
+        // Category laptops = seedCategory("Laptops",       "https://cdn.online-store.uz/categories/laptops.png");
 
-        Company apple   = seedCompany("Apple",   "https://cdn.online-store.uz/companies/apple.png");
-        Company samsung = seedCompany("Samsung", "https://cdn.online-store.uz/companies/samsung.png");
+        // Company apple   = seedCompany("Apple",   "https://cdn.online-store.uz/companies/apple.png");
+        // Company samsung = seedCompany("Samsung", "https://cdn.online-store.uz/companies/samsung.png");
 
-        seedProduct(
-            "iPhone 15 Pro",
-            "Apple iPhone 15 Pro — A17 Pro chip, titanium design, 48MP camera system, USB-C.",
-            phones, apple,
-            new BigDecimal("9800000"),
-            new BigDecimal("11500000"),
-            new BigDecimal("5"),
-            50
-        );
+        // seedProduct(
+        //     "iPhone 15 Pro",
+        //     "Apple iPhone 15 Pro — A17 Pro chip, titanium design, 48MP camera system, USB-C.",
+        //     phones, apple,
+        //     new BigDecimal("9800000"),
+        //     new BigDecimal("11500000"),
+        //     new BigDecimal("5"),
+        //     50
+        // );
 
-        seedProduct(
-            "Samsung Galaxy S24 Ultra",
-            "Samsung Galaxy S24 Ultra — Snapdragon 8 Gen 3, 200MP camera, built-in S Pen.",
-            phones, samsung,
-            new BigDecimal("8500000"),
-            new BigDecimal("10200000"),
-            new BigDecimal("0"),
-            35
-        );
+        // seedProduct(
+        //     "Samsung Galaxy S24 Ultra",
+        //     "Samsung Galaxy S24 Ultra — Snapdragon 8 Gen 3, 200MP camera, built-in S Pen.",
+        //     phones, samsung,
+        //     new BigDecimal("8500000"),
+        //     new BigDecimal("10200000"),
+        //     new BigDecimal("0"),
+        //     35
+        // );
 
-        seedProduct(
-            "MacBook Pro 14 M3",
-            "Apple MacBook Pro 14\" — M3 chip, 18GB unified memory, 18-hour battery life.",
-            laptops, apple,
-            new BigDecimal("16000000"),
-            new BigDecimal("19500000"),
-            new BigDecimal("3"),
-            20
-        );
+        // seedProduct(
+        //     "MacBook Pro 14 M3",
+        //     "Apple MacBook Pro 14\" — M3 chip, 18GB unified memory, 18-hour battery life.",
+        //     laptops, apple,
+        //     new BigDecimal("16000000"),
+        //     new BigDecimal("19500000"),
+        //     new BigDecimal("3"),
+        //     20
+        // );
 
-        seedProduct(
-            "Samsung Galaxy Book4 Pro",
-            "Samsung Galaxy Book4 Pro — Intel Core Ultra 7, AMOLED display, 63Wh battery.",
-            laptops, samsung,
-            new BigDecimal("10500000"),
-            new BigDecimal("13000000"),
-            new BigDecimal("0"),
-            15
-        );
+        // seedProduct(
+        //     "Samsung Galaxy Book4 Pro",
+        //     "Samsung Galaxy Book4 Pro — Intel Core Ultra 7, AMOLED display, 63Wh battery.",
+        //     laptops, samsung,
+        //     new BigDecimal("10500000"),
+        //     new BigDecimal("13000000"),
+        //     new BigDecimal("0"),
+        //     15
+        // );
 
         log.info("Data seeding completed successfully");
     }

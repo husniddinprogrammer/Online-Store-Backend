@@ -74,17 +74,17 @@ server:
 app:
   jwt:
     secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
-    access-token-expiration: ${JWT_ACCESS_EXPIRATION:900000}       # 15 min
-    refresh-token-expiration: ${JWT_REFRESH_EXPIRATION:604800000}  # 7 days
+    access-token-expiration: ${JWT_ACCESS_EXPIRATION:259200000}    # 3 days
+    refresh-token-expiration: ${JWT_REFRESH_EXPIRATION:2592000000} # 30 days
   frontend-url: ${FRONTEND_URL:http://localhost:3000}
   email-verification-expiry-hours: 24
-  password-reset-expiry-minutes: 30
+  password-reset-expiry-minutes: 500
   upload:
     base-dir: ${UPLOAD_BASE_DIR:uploads}          # root upload directory; subdirs: products, categories, companies
     base-url: ${BASE_URL:http://localhost:8080}   # used to build public image URLs
     max-file-size-mb: ${UPLOAD_MAX_FILE_SIZE_MB:3}
   seed:
-    enabled: ${SEED_ENABLED:false}
+    enabled: ${SEED_ENABLED:true}
     admin-email: ${ADMIN_EMAIL:admin@online-store.uz}
     admin-password: ${ADMIN_PASSWORD:SuperAdmin@2024}
     admin-name: ${ADMIN_NAME:Super}

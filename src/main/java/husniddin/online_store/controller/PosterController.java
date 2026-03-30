@@ -38,22 +38,26 @@ public class PosterController {
         return ResponseEntity.ok(ApiResponse.success(posterService.click(id)));
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     @SecurityRequirement(name = "bearerAuth")
     @Operation(summary = "Create poster")
-    public ResponseEntity<ApiResponse<PosterResponse>> create(@Valid @RequestBody PosterRequest request) {
+    public ResponseEntity<ApiResponse<PosterResponse>> create(
+            @RequestPart("image") MultipartFile image,
+            @RequestPart("request") @Valid PosterRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.success("Poster created", posterService.create(request)));
+                .body(ApiResponse.success("Poster created", posterService.create(image, request)));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     @SecurityRequirement(name = "bearerAuth")
     @Operation(summary = "Update poster")
     public ResponseEntity<ApiResponse<PosterResponse>> update(
-            @PathVariable Long id, @Valid @RequestBody PosterRequest request) {
-        return ResponseEntity.ok(ApiResponse.success(posterService.update(id, request)));
+            @PathVariable Long id,
+            @RequestPart(value = "image", required = false) MultipartFile image,
+            @RequestPart("request") @Valid PosterRequest request) {
+        return ResponseEntity.ok(ApiResponse.success(posterService.update(id, image, request)));
     }
 
     @DeleteMapping("/{id}")

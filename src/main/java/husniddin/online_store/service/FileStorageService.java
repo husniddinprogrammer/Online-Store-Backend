@@ -24,6 +24,8 @@ public class FileStorageService {
 
     private static final int MAX_DIMENSION = 800;
     private static final double QUALITY = 0.70;
+    private static final double HIGH_QUALITY = 0.95;
+    private static final long SMALL_FILE_THRESHOLD_KB = 50;
     private static final Set<String> ALLOWED_CONTENT_TYPES = Set.of("image/jpeg", "image/png");
     private static final Set<String> ALLOWED_EXTENSIONS   = Set.of("jpg", "jpeg", "png");
 
@@ -147,18 +149,21 @@ public class FileStorageService {
             Files.createDirectories(targetDir);
             Path target = targetDir.resolve(filename);
 
-            log.debug("Resizing to max {}x{} @ {}% quality → '{}'",
-                    MAX_DIMENSION, MAX_DIMENSION, (int) (QUALITY * 100), target.toAbsolutePath());
+            long fileSizeKB = file.getSize() / 1024;
+            double quality = fileSizeKB <= SMALL_FILE_THRESHOLD_KB ? HIGH_QUALITY : QUALITY;
+            
+            log.debug("Processing image: {}KB → {}% quality, max {}x{} → '{}'",
+                    fileSizeKB, (int) (quality * 100), MAX_DIMENSION, MAX_DIMENSION, target.toAbsolutePath());
 
             Thumbnails.of(file.getInputStream())
                     .size(MAX_DIMENSION, MAX_DIMENSION)
                     .keepAspectRatio(true)
                     .outputFormat("jpg")
-                    .outputQuality(QUALITY)
+                    .outputQuality(quality)
                     .toFile(target.toFile());
 
-            log.info("Saved: original={}KB → compressed={}KB ({})",
-                    file.getSize() / 1024, Files.size(target) / 1024, filename);
+            log.info("Saved: original={}KB → compressed={}KB ({}) [quality={}%, size_threshold={}KB]",
+                    fileSizeKB, Files.size(target) / 1024, filename, (int) (quality * 100), SMALL_FILE_THRESHOLD_KB);
 
         } catch (IOException e) {
             log.error("Failed to process '{}': {}", file.getOriginalFilename(), e.getMessage(), e);
