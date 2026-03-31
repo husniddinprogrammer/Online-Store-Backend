@@ -658,3 +658,140 @@ IMPORTANT
 - Avoid hardcoded values
 - Follow clean architecture
 - Think about edge cases
+
+8-TASK
+Role: Senior Java backend engineer + system architect
+
+Task:
+Implement analytics and reporting API for admin dashboard
+
+Tech Stack:
+- Spring Boot
+- JPA (Hibernate)
+- PostgreSQL
+- Use BigDecimal for money
+
+--------------------------------
+1. ANALYTICS FILTER API
+--------------------------------
+
+Create API:
+
+GET /api/admin/analytics
+
+Query Params:
+- period: DAILY | WEEKLY | MONTHLY | CUSTOM
+- fromDate (required if CUSTOM)
+- toDate (required if CUSTOM)
+
+--------------------------------
+2. METRICS TO CALCULATE
+--------------------------------
+
+Return the following:
+
+1. totalProfit
+   - Sum of Order.totalProfit
+
+2. totalRevenue
+   - Sum of all paid orders (totalAmount)
+
+3. totalSoldProductsCount
+   - Total quantity sold (sum of OrderItem.quantity)
+
+4. totalOrdersCount
+   - Count of orders
+
+5. totalUsersAdded
+   - Count of users created in period
+
+6. totalProductsAdded
+   - Count of products created in period
+
+7. topSellingProducts (top 10)
+   - Based on total sold quantity
+   - Include:
+     - productId
+     - name
+     - totalSold
+     - revenue
+
+--------------------------------
+3. FILTER LOGIC
+--------------------------------
+
+- DAILY → today
+- WEEKLY → last 7 days
+- MONTHLY → last 30 days
+- CUSTOM → fromDate → toDate
+
+--------------------------------
+4. IMPLEMENTATION
+--------------------------------
+
+- Use efficient queries (JPQL or native)
+- Avoid N+1 problems
+- Use aggregation (SUM, COUNT, GROUP BY)
+- Optimize with indexes if needed
+
+--------------------------------
+5. RESPONSE FORMAT
+--------------------------------
+
+Return structured response:
+
+{
+  "period": "DAILY",
+  "totalProfit": 1200000,
+  "totalRevenue": 5000000,
+  "totalSoldProductsCount": 120,
+  "totalOrdersCount": 35,
+  "totalUsersAdded": 10,
+  "totalProductsAdded": 5,
+  "topSellingProducts": [
+    {
+      "productId": 1,
+      "name": "iPhone 13",
+      "totalSold": 25,
+      "revenue": 2500000
+    }
+  ]
+}
+
+--------------------------------
+6. FRONTEND API EXAMPLES
+--------------------------------
+
+Generate frontend usage examples:
+
+Axios example:
+
+GET /api/admin/analytics?period=DAILY
+
+GET /api/admin/analytics?period=CUSTOM&fromDate=2026-01-01&toDate=2026-01-31
+
+--------------------------------
+7. OUTPUT
+--------------------------------
+
+- Controller
+- Service
+- Repository queries
+- DTOs
+- Example API responses
+- Example axios usage
+
+--------------------------------
+IMPORTANT
+--------------------------------
+
+- Use clean architecture
+- Use DTO (do not expose entities)
+- Use BigDecimal for money
+- Make it scalable
+- Think like senior engineer
+
+Also:
+- Add chart-ready response (date vs revenue)
+- Add caching (Redis)
+- Add pagination for top products

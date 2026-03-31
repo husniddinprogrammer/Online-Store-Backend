@@ -44,4 +44,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT u FROM User u WHERE u.email = :email")
     Optional<User> findByEmailForUpdate(@Param("email") String email);
+
+    long countByCreatedAtBetween(java.time.LocalDateTime from, java.time.LocalDateTime to);
 }

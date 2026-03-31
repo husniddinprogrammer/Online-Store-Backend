@@ -15,4 +15,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
     Page<Product> findByCompanyId(Long companyId, Pageable pageable);
 
     boolean existsByNameIgnoreCase(String name);
+
+    long countByCreatedAtBetween(java.time.LocalDateTime from, java.time.LocalDateTime to);
 }
