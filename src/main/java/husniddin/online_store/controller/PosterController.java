@@ -7,7 +7,6 @@ import husniddin.online_store.service.PosterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,7 +43,9 @@ public class PosterController {
     @Operation(summary = "Create poster")
     public ResponseEntity<ApiResponse<PosterResponse>> create(
             @RequestPart("image") MultipartFile image,
-            @RequestPart("request") @Valid PosterRequest request) {
+            @RequestParam(value = "link", required = false) String link) {
+        PosterRequest request = new PosterRequest();
+        request.setLink(link);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.success("Poster created", posterService.create(image, request)));
     }
@@ -56,7 +57,9 @@ public class PosterController {
     public ResponseEntity<ApiResponse<PosterResponse>> update(
             @PathVariable Long id,
             @RequestPart(value = "image", required = false) MultipartFile image,
-            @RequestPart("request") @Valid PosterRequest request) {
+            @RequestParam(value = "link", required = false) String link) {
+        PosterRequest request = new PosterRequest();
+        request.setLink(link);
         return ResponseEntity.ok(ApiResponse.success(posterService.update(id, image, request)));
     }
 

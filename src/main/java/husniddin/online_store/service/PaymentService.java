@@ -7,6 +7,7 @@ import husniddin.online_store.entity.Payment;
 import husniddin.online_store.entity.User;
 import husniddin.online_store.enums.NotificationType;
 import husniddin.online_store.enums.OrderStatus;
+import husniddin.online_store.enums.PayMethod;
 import husniddin.online_store.enums.PayStatus;
 import husniddin.online_store.exception.BadRequestException;
 import husniddin.online_store.exception.ForbiddenException;
@@ -37,7 +38,11 @@ public class PaymentService {
         Order order = orderRepository.findById(request.getOrderId())
                 .orElseThrow(() -> new ResourceNotFoundException("Order", request.getOrderId()));
 
-        User user = getCurrentUser();
+        // Lock the user row to prevent concurrent balance mutations
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmailForUpdate(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
         if (!order.getUser().getId().equals(user.getId())) {
             throw new ForbiddenException("Access denied");
         }
@@ -48,6 +53,15 @@ public class PaymentService {
 
         if (paymentRepository.findByOrderId(order.getId()).isPresent()) {
             throw new BadRequestException("Payment already exists for this order");
+        }
+
+        if (request.getMethod() == PayMethod.BALANCE) {
+            if (user.getBalance().compareTo(order.getTotalAmount()) < 0) {
+                throw new BadRequestException("Insufficient balance. Required: "
+                        + order.getTotalAmount() + ", available: " + user.getBalance());
+            }
+            user.setBalance(user.getBalance().subtract(order.getTotalAmount()));
+            userRepository.save(user);
         }
 
         Payment payment = Payment.builder()
@@ -64,12 +78,12 @@ public class PaymentService {
 
         // Confirm payment to the customer
         notificationService.sendToUser(user, NotificationType.INFO,
-                "Payment of " + order.getTotalAmount() + " confirmed for order #" + order.getId() + ".");
+                "To'lov tasdiqlandi: " + order.getTotalAmount() + " - buyurtma #" + order.getId());
 
         // Alert admins so they can start processing the order
         notificationService.sendToAdmins(NotificationType.INFO,
-                "Payment received for order #" + order.getId()
-                + " by " + user.getName() + " — amount: " + order.getTotalAmount());
+                "To'lov qabul qilindi: buyurtma #" + order.getId()
+                + " - mijoz: " + user.getName() + " - summa: " + order.getTotalAmount());
 
         log.info("Payment processed for order: {}", order.getId());
         return paymentMapper.toResponse(savedPayment);
@@ -82,9 +96,4 @@ public class PaymentService {
         return paymentMapper.toResponse(payment);
     }
 
-    private User getCurrentUser() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-    }
 }

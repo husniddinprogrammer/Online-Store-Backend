@@ -71,26 +71,30 @@ public class NotificationService {
     // ── Send API (called from other services) ─────────────────────────────────
 
     /**
-     * Sends a notification to a specific user (by User entity).
-     * Persists to DB and pushes over WebSocket.
-     * Annotated {@code @Async} so it never blocks the calling transaction.
+     * Sends a notification to a specific user.
+     * The user ID is used to reload the entity inside the async thread's own
+     * Hibernate session, avoiding cross-session state conflicts in Hibernate 6.
      */
     @Async
+    @Transactional
     public void sendToUser(User user, NotificationType type, String text) {
+        User freshUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User", user.getId()));
         Notification notification = Notification.builder()
-                .user(user)
+                .user(freshUser)
                 .type(type)
                 .text(text)
                 .build();
         Notification saved = notificationRepository.save(notification);
-        pushToWebSocket(user.getEmail(), notificationMapper.toResponse(saved));
-        log.debug("Notification sent to {}: {}", user.getEmail(), text);
+        pushToWebSocket(freshUser.getEmail(), notificationMapper.toResponse(saved));
+        log.debug("Notification sent to {}: {}", freshUser.getEmail(), text);
     }
 
     /**
      * Backward-compatible overload that accepts the type as a String.
      */
     @Async
+    @Transactional
     public void sendToUser(User user, String type, String text) {
         sendToUser(user, NotificationType.valueOf(type), text);
     }
@@ -99,6 +103,7 @@ public class NotificationService {
      * Broadcasts a notification to ALL active, non-blocked users with the given role.
      */
     @Async
+    @Transactional
     public void sendToRole(Role role, NotificationType type, String text) {
         List<User> targets = userRepository.findByRoleAndIsDeletedFalseAndBlockedFalse(role);
         for (User target : targets) {
@@ -117,6 +122,7 @@ public class NotificationService {
      * Convenience method: sends to both ADMIN and SUPER_ADMIN roles.
      */
     @Async
+    @Transactional
     public void sendToAdmins(NotificationType type, String text) {
         sendToRole(Role.ADMIN, type, text);
         sendToRole(Role.SUPER_ADMIN, type, text);

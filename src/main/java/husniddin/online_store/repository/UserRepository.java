@@ -2,9 +2,11 @@ package husniddin.online_store.repository;
 
 import husniddin.online_store.entity.User;
 import husniddin.online_store.enums.Role;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -37,4 +39,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     /** Used by notification broadcast: find all active users with a given role. */
     List<User> findByRoleAndIsDeletedFalseAndBlockedFalse(Role role);
+
+    /** Acquires a row-level lock on the user row — use for balance mutations to prevent race conditions. */
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT u FROM User u WHERE u.email = :email")
+    Optional<User> findByEmailForUpdate(@Param("email") String email);
 }

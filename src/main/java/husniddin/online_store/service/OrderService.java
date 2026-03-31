@@ -5,6 +5,8 @@ import husniddin.online_store.dto.response.OrderResponse;
 import husniddin.online_store.entity.*;
 import husniddin.online_store.enums.NotificationType;
 import husniddin.online_store.enums.OrderStatus;
+import husniddin.online_store.enums.PayMethod;
+import husniddin.online_store.enums.PayStatus;
 import husniddin.online_store.exception.BadRequestException;
 import husniddin.online_store.exception.ForbiddenException;
 import husniddin.online_store.exception.ResourceNotFoundException;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,11 +38,15 @@ public class OrderService {
     private final AddressRepository addressRepository;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final PaymentRepository paymentRepository;
     private final OrderMapper orderMapper;
     private final NotificationService notificationService;
 
     public OrderResponse createOrderFromCart(CreateOrderRequest request) {
-        User user = getCurrentUser();
+        // Acquire row-level lock on user to prevent concurrent balance mutations
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmailForUpdate(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Cart cart = cartRepository.findByUserId(user.getId())
                 .orElseThrow(() -> new BadRequestException("Cart is empty"));
@@ -56,51 +63,89 @@ public class OrderService {
             throw new ForbiddenException("Address does not belong to current user");
         }
 
-        // Validate stock and calculate total
+        // Validate stock
         for (CartItem item : cartItems) {
             if (item.getProduct().getStockQuantity() < item.getQuantity()) {
                 throw new BadRequestException("Insufficient stock for product: " + item.getProduct().getName());
             }
         }
 
-        BigDecimal totalAmount = cartItems.stream()
-                .map(item -> item.getProduct().getSellPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        // Calculate totals
+        BigDecimal totalAmount = BigDecimal.ZERO;
+        BigDecimal totalProfit = BigDecimal.ZERO;
 
+        for (CartItem item : cartItems) {
+            Product p = item.getProduct();
+            BigDecimal qty = BigDecimal.valueOf(item.getQuantity());
+            BigDecimal discount = p.getDiscountPercent() == null ? BigDecimal.ZERO : p.getDiscountPercent();
+            BigDecimal discountedPrice = p.getSellPrice()
+                    .multiply(BigDecimal.ONE.subtract(discount.divide(new BigDecimal("100"), 10, RoundingMode.HALF_UP)));
+            totalAmount = totalAmount.add(discountedPrice.multiply(qty));
+            totalProfit = totalProfit.add(discountedPrice.subtract(p.getArrivalPrice()).multiply(qty));
+        }
+
+        totalAmount = totalAmount.setScale(2, RoundingMode.HALF_UP);
+        totalProfit = totalProfit.setScale(2, RoundingMode.HALF_UP);
+
+        // Check and deduct balance
+        if (user.getBalance().compareTo(totalAmount) < 0) {
+            throw new BadRequestException("Insufficient balance. Required: "
+                    + totalAmount + ", available: " + user.getBalance());
+        }
+        user.setBalance(user.getBalance().subtract(totalAmount));
+        userRepository.save(user);
+
+        // Create order as PAID immediately
         Order order = Order.builder()
                 .user(user)
                 .totalAmount(totalAmount)
+                .totalProfit(totalProfit)
+                .status(OrderStatus.PAID)
                 .deliveryAddress(address)
                 .build();
         orderRepository.save(order);
 
+        // Save order items and update stock
         List<OrderItem> orderItems = cartItems.stream().map(cartItem -> {
             Product product = cartItem.getProduct();
             product.setStockQuantity(product.getStockQuantity() - cartItem.getQuantity());
             product.setSoldQuantity(product.getSoldQuantity() + cartItem.getQuantity());
             productRepository.save(product);
 
+            BigDecimal discount = product.getDiscountPercent() == null ? BigDecimal.ZERO : product.getDiscountPercent();
+            BigDecimal discountedPrice = product.getSellPrice()
+                    .multiply(BigDecimal.ONE.subtract(discount.divide(new BigDecimal("100"), 10, RoundingMode.HALF_UP)))
+                    .setScale(2, RoundingMode.HALF_UP);
+
             return OrderItem.builder()
                     .order(order)
                     .product(product)
                     .quantity(cartItem.getQuantity())
-                    .price(product.getSellPrice())
+                    .price(discountedPrice)
                     .build();
         }).collect(Collectors.toList());
 
         orderItemRepository.saveAll(orderItems);
         cartItemRepository.deleteByCartId(cart.getId());
 
-        // Notify the customer
+        // Record the payment
+        paymentRepository.save(Payment.builder()
+                .order(order)
+                .amount(totalAmount)
+                .method(PayMethod.BALANCE)
+                .status(PayStatus.PAID)
+                .build());
+
+        // Notify customer
         notificationService.sendToUser(user, NotificationType.INFO,
-                "Your order #" + order.getId() + " has been placed successfully!");
+                "Buyurtmangiz #" + order.getId() + " to'landi va qabul qilindi! Summa: " + totalAmount);
 
-        // Notify all admins and super-admins
+        // Notify admins
         notificationService.sendToAdmins(NotificationType.INFO,
-                "New order #" + order.getId() + " placed by " + user.getName()
-                + " — total: " + totalAmount);
+                "Yangi buyurtma #" + order.getId() + " - mijoz: " + user.getName()
+                + " - jami summa: " + totalAmount);
 
-        log.info("Order created: {} for user: {}", order.getId(), user.getEmail());
+        log.info("Order {} created and paid via balance for user: {}", order.getId(), user.getEmail());
 
         OrderResponse response = orderMapper.toResponse(order);
         response.setItems(orderItems.stream().map(orderMapper::toItemResponse).toList());
@@ -154,10 +199,10 @@ public class OrderService {
 
         // Send targeted customer notifications only for meaningful status transitions
         String customerMessage = switch (newStatus) {
-            case SHIPPED   -> "Great news! Your order #" + order.getId() + " has been shipped and is on its way.";
-            case DELIVERED -> "Your order #" + order.getId() + " has been delivered. Enjoy your purchase!";
-            case PAID      -> "Payment confirmed for order #" + order.getId() + ". We are preparing your order.";
-            case CANCELLED -> "Your order #" + order.getId() + " has been cancelled.";
+            case SHIPPED   -> "Yaxshi xabar! Sizning buyurtmangiz #" + order.getId() + " yuborildi va yo'lda.";
+            case DELIVERED -> "Buyurtmangiz #" + order.getId() + " yetkazib berildi. Xaridingiz bilan qoling!";
+            case PAID      -> "Buyurtma #" + order.getId() + " uchun to'lov tasdiqlandi. Buyurtmangizni tayyorlayapmiz.";
+            case CANCELLED -> "Buyurtmangiz #" + order.getId() + " bekor qilindi.";
             default        -> null;
         };
         if (customerMessage != null) {

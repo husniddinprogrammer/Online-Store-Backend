@@ -563,3 +563,98 @@ Also:
 - Add WebSocket (real-time notifications)
 - Add unread notification count
 - Add pagination for notifications
+
+7-TASK
+Role: Senior Java backend engineer + system architect
+
+Task:
+Add profit calculation to Order and implement balance deduction with payment logic
+
+Tech Stack:
+- Spring Boot
+- JPA (Hibernate)
+- PostgreSQL
+- BigDecimal for money
+
+--------------------------------
+1. ORDER PROFIT CALCULATION
+--------------------------------
+
+Requirement:
+- Add totalProfit field to Order entity
+
+Field:
+- totalProfit (BigDecimal)
+
+Calculation:
+
+For each OrderItem:
+
+discountedPrice = sellPrice * (1 - discount/100)
+profit = (discountedPrice - arrivalPrice) * quantity
+
+Total:
+- Sum all item profits → save into Order.totalProfit
+
+Rules:
+- Use BigDecimal (NOT double)
+- Handle discount correctly
+- Avoid precision loss
+
+--------------------------------
+2. ORDER PAYMENT LOGIC
+--------------------------------
+
+Trigger:
+- When user confirms order (checkout)
+
+Behavior:
+
+1. Get user balance
+2. Calculate total order amount
+3. If balance >= totalAmount:
+    - Deduct balance
+    - Set order status = PAID
+    - Save order
+4. If balance < totalAmount:
+    - Throw exception: "Insufficient balance"
+
+--------------------------------
+3. DATA CONSISTENCY
+--------------------------------
+
+Requirements:
+- Use @Transactional
+- Prevent race conditions
+- Ensure atomic operation:
+    (balance deduction + order save)
+
+--------------------------------
+4. OPTIONAL (GOOD PRACTICE)
+--------------------------------
+
+- Save payment record:
+  Payment entity:
+    - order
+    - amount
+    - method (BALANCE)
+    - status (PAID)
+
+--------------------------------
+OUTPUT
+--------------------------------
+
+- Updated Order entity (totalProfit)
+- Updated OrderService (profit calculation)
+- Payment logic implementation
+- Balance deduction logic
+- Clean production-ready code
+
+--------------------------------
+IMPORTANT
+--------------------------------
+
+- Use BigDecimal everywhere for money
+- Avoid hardcoded values
+- Follow clean architecture
+- Think about edge cases
