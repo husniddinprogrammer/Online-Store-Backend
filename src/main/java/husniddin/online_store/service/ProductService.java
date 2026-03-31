@@ -66,6 +66,13 @@ public class ProductService {
             case PRICE_ASC     -> Sort.by(Sort.Direction.ASC,  "sellPrice");
             case PRICE_DESC    -> Sort.by(Sort.Direction.DESC, "sellPrice");
             case DISCOUNT_DESC -> Sort.by(Sort.Direction.DESC, "discountPercent");
+            case DISCOUNT_ASC  -> Sort.by(Sort.Direction.ASC,  "discountPercent");
+            case ID_DESC       -> Sort.by(Sort.Direction.DESC, "id");
+            case ID_ASC        -> Sort.by(Sort.Direction.ASC,  "id");
+            case STOCK_DESC    -> Sort.by(Sort.Direction.DESC, "stockQuantity");
+            case STOCK_ASC     -> Sort.by(Sort.Direction.ASC,  "stockQuantity");
+            case SOLD_DESC     -> Sort.by(Sort.Direction.DESC, "soldQuantity");
+            case SOLD_ASC      -> Sort.by(Sort.Direction.ASC,  "soldQuantity");
         };
     }
 
