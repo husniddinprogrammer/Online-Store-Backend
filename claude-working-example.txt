@@ -795,3 +795,101 @@ Also:
 - Add chart-ready response (date vs revenue)
 - Add caching (Redis)
 - Add pagination for top products
+
+9-TASK
+
+Role: Senior Java backend engineer + system architect
+
+Task:
+Restrict product comments so only verified buyers can comment and limit one comment per user per product
+
+Tech Stack:
+- Spring Boot
+- JPA (Hibernate)
+- PostgreSQL
+
+--------------------------------
+1. VERIFIED PURCHASE RULE
+--------------------------------
+
+Requirement:
+- Only users who have purchased the product can write a comment
+
+Definition:
+- A user is considered a buyer if:
+  - There exists an Order
+  - Order belongs to the user
+  - Order status = PAID or DELIVERED
+  - Order contains the product (via OrderItem)
+
+Validation:
+- Before saving comment:
+  → Check if user has purchased this product
+
+If NOT:
+- Throw exception:
+  "You can only comment on purchased products"
+
+--------------------------------
+2. ONE COMMENT PER USER PER PRODUCT
+--------------------------------
+
+Requirement:
+- One user can write only ONE comment per product
+
+Validation:
+- Before saving:
+  → Check if comment already exists:
+    (userId + productId)
+
+If exists:
+- Throw exception:
+  "You have already commented on this product"
+
+Database:
+- Add unique constraint:
+  (user_id, product_id)
+
+--------------------------------
+3. IMPLEMENTATION
+--------------------------------
+
+- Update CommentService:
+  - validatePurchase(userId, productId)
+  - validateUniqueComment(userId, productId)
+
+- Repository methods:
+  - existsByUserIdAndProductId(...)
+  - existsPurchasedProduct(userId, productId)
+
+- Use efficient query (JOIN Order → OrderItem)
+
+--------------------------------
+4. SECURITY
+--------------------------------
+
+- Only authenticated users can comment
+- Use userId from JWT
+
+--------------------------------
+5. OUTPUT
+--------------------------------
+
+- Updated CommentService
+- Repository queries
+- Validation logic
+- Exception handling
+- Clean production-ready code
+
+--------------------------------
+IMPORTANT
+--------------------------------
+
+- Avoid N+1 queries
+- Use optimized query
+- Follow clean architecture
+- Think about edge cases
+Also:
+- Allow user to UPDATE their comment
+- Add rating validation (1–5)
+- Add comment edit/delete permissions (only owner)
