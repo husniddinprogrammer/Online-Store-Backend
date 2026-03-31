@@ -5,6 +5,7 @@ import husniddin.online_store.dto.response.PaymentResponse;
 import husniddin.online_store.entity.Order;
 import husniddin.online_store.entity.Payment;
 import husniddin.online_store.entity.User;
+import husniddin.online_store.enums.NotificationType;
 import husniddin.online_store.enums.OrderStatus;
 import husniddin.online_store.enums.PayStatus;
 import husniddin.online_store.exception.BadRequestException;
@@ -61,8 +62,14 @@ public class PaymentService {
         order.setStatus(OrderStatus.PAID);
         orderRepository.save(order);
 
-        notificationService.sendToUser(user, "INFO",
-                "Payment successful for order #" + order.getId() + ". Amount: " + order.getTotalAmount());
+        // Confirm payment to the customer
+        notificationService.sendToUser(user, NotificationType.INFO,
+                "Payment of " + order.getTotalAmount() + " confirmed for order #" + order.getId() + ".");
+
+        // Alert admins so they can start processing the order
+        notificationService.sendToAdmins(NotificationType.INFO,
+                "Payment received for order #" + order.getId()
+                + " by " + user.getName() + " — amount: " + order.getTotalAmount());
 
         log.info("Payment processed for order: {}", order.getId());
         return paymentMapper.toResponse(savedPayment);

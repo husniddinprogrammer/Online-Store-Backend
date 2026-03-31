@@ -112,6 +112,12 @@
             <version>${mapstruct.version}</version>
         </dependency>
 
+        <!-- WebSocket / STOMP -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
         <!-- Thumbnailator - image resizing & compression -->
         <dependency>
             <groupId>net.coobird</groupId>

@@ -37,15 +37,17 @@ public class FavoriteProductService {
         User user = getCurrentUser();
         Product product = productService.findProductById(productId);
 
-        if (favoriteProductRepository.existsByUserIdAndProductId(user.getId(), productId)) {
-            throw new BadRequestException("Product is already in favorites");
-        }
-
-        FavoriteProduct favorite = FavoriteProduct.builder()
-                .user(user)
-                .product(product)
-                .build();
-        favoriteProductRepository.save(favorite);
+        favoriteProductRepository.findByUserIdAndProductIdIgnoreDeleted(user.getId(), productId)
+                .ifPresentOrElse(existing -> {
+                    if (!existing.isDeleted()) {
+                        throw new BadRequestException("Product is already in favorites");
+                    }
+                    existing.setDeleted(false);
+                    favoriteProductRepository.save(existing);
+                }, () -> favoriteProductRepository.save(FavoriteProduct.builder()
+                        .user(user)
+                        .product(product)
+                        .build()));
     }
 
     public void removeFavorite(Long productId) {

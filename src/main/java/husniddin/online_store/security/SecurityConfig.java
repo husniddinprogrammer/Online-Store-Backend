@@ -38,7 +38,9 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/swagger-ui.html",
             "/api-docs/**",
-            "/v3/api-docs/**"
+            "/v3/api-docs/**",
+            // WebSocket handshake (SockJS uses multiple sub-paths under /ws)
+            "/ws/**"
     };
 
     @Bean

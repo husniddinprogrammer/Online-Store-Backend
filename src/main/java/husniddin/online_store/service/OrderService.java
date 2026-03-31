@@ -3,6 +3,7 @@ package husniddin.online_store.service;
 import husniddin.online_store.dto.request.CreateOrderRequest;
 import husniddin.online_store.dto.response.OrderResponse;
 import husniddin.online_store.entity.*;
+import husniddin.online_store.enums.NotificationType;
 import husniddin.online_store.enums.OrderStatus;
 import husniddin.online_store.exception.BadRequestException;
 import husniddin.online_store.exception.ForbiddenException;
@@ -90,7 +91,14 @@ public class OrderService {
         orderItemRepository.saveAll(orderItems);
         cartItemRepository.deleteByCartId(cart.getId());
 
-        notificationService.sendToUser(user, "INFO", "Your order #" + order.getId() + " has been placed successfully!");
+        // Notify the customer
+        notificationService.sendToUser(user, NotificationType.INFO,
+                "Your order #" + order.getId() + " has been placed successfully!");
+
+        // Notify all admins and super-admins
+        notificationService.sendToAdmins(NotificationType.INFO,
+                "New order #" + order.getId() + " placed by " + user.getName()
+                + " — total: " + totalAmount);
 
         log.info("Order created: {} for user: {}", order.getId(), user.getEmail());
 
@@ -144,8 +152,17 @@ public class OrderService {
         order.setStatus(newStatus);
         Order saved = orderRepository.save(order);
 
-        notificationService.sendToUser(order.getUser(), "INFO",
-                "Your order #" + order.getId() + " status updated to: " + newStatus);
+        // Send targeted customer notifications only for meaningful status transitions
+        String customerMessage = switch (newStatus) {
+            case SHIPPED   -> "Great news! Your order #" + order.getId() + " has been shipped and is on its way.";
+            case DELIVERED -> "Your order #" + order.getId() + " has been delivered. Enjoy your purchase!";
+            case PAID      -> "Payment confirmed for order #" + order.getId() + ". We are preparing your order.";
+            case CANCELLED -> "Your order #" + order.getId() + " has been cancelled.";
+            default        -> null;
+        };
+        if (customerMessage != null) {
+            notificationService.sendToUser(order.getUser(), NotificationType.INFO, customerMessage);
+        }
 
         return orderMapper.toResponse(saved);
     }

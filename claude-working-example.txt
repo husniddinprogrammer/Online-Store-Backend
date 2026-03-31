@@ -448,3 +448,118 @@ Important:
 - Do not stretch images
 - Make code reusable
 - Use configurable upload path
+
+6-TASK
+
+Role: Senior Java backend engineer + system architect
+
+Task:
+Implement role-based access control restrictions and notification system
+
+Tech Stack:
+- Spring Boot
+- Spring Security
+- JPA (Hibernate)
+- PostgreSQL
+
+--------------------------------
+1. SUPER ADMIN PROTECTION
+--------------------------------
+
+Requirements:
+- SUPER_ADMIN users must NOT:
+  - Be deleted
+  - Be updated (role change, edit)
+  - Be created via normal API (only seeded)
+
+- In user management API:
+  - Exclude SUPER_ADMIN from general user list
+  - Prevent any modification on SUPER_ADMIN
+
+--------------------------------
+2. ADMIN ROLE RESTRICTIONS
+--------------------------------
+
+Requirements:
+- ADMIN users:
+  - Cannot change roles of users
+  - Cannot view ADMIN or SUPER_ADMIN users
+  - Can only manage CUSTOMER users
+
+Security:
+- Enforce via Spring Security + service layer validation
+
+--------------------------------
+3. NOTIFICATION SYSTEM (ADMIN SIDE)
+--------------------------------
+
+Trigger:
+- When order is created
+- When payment is completed
+
+Behavior:
+- Send notification to:
+  - ADMIN
+  - SUPER_ADMIN
+
+Notification entity:
+- id
+- user (ManyToOne)
+- type (INFO, WARNING)
+- text
+- isSeen
+- createdAt
+
+--------------------------------
+4. NOTIFICATION SYSTEM (CUSTOMER SIDE)
+--------------------------------
+
+Trigger:
+- When order is accepted
+- When order status changes (SHIPPED, DELIVERED)
+
+Behavior:
+- Send notification to the customer (order owner)
+
+--------------------------------
+IMPLEMENTATION
+--------------------------------
+
+Security:
+- Use @PreAuthorize where needed
+- Also validate in service layer
+
+Notification:
+- Create NotificationService
+- Reusable method:
+  sendToUser(userId, message)
+  sendToRole(role, message)
+
+Events (recommended):
+- Use application events or service hooks
+
+--------------------------------
+OUTPUT
+--------------------------------
+
+- Updated UserService (role restrictions)
+- Security config updates
+- Notification entity
+- NotificationService
+- Integration in OrderService & PaymentService
+- Example notifications
+- Clean production-ready code
+
+--------------------------------
+IMPORTANT
+--------------------------------
+
+- Follow SOLID principles
+- Do NOT rely only on controller validation
+- Ensure security at multiple layers
+- Avoid code duplication
+- Think like senior engineer
+Also:
+- Add WebSocket (real-time notifications)
+- Add unread notification count
+- Add pagination for notifications

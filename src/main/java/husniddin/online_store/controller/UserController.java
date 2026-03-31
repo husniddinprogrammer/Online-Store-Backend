@@ -1,5 +1,6 @@
 package husniddin.online_store.controller;
 
+import husniddin.online_store.dto.request.BalanceTopUpRequest;
 import husniddin.online_store.dto.request.ChangePasswordRequest;
 import husniddin.online_store.dto.request.UpdateUserRequest;
 import husniddin.online_store.dto.response.ApiResponse;
@@ -37,6 +38,12 @@ public class UserController {
     @Operation(summary = "Update current user profile")
     public ResponseEntity<ApiResponse<UserResponse>> updateCurrentUser(@Valid @RequestBody UpdateUserRequest request) {
         return ResponseEntity.ok(ApiResponse.success(userService.updateCurrentUser(request)));
+    }
+
+    @PostMapping("/balance/top-up")
+    @Operation(summary = "Top up current user balance")
+    public ResponseEntity<ApiResponse<UserResponse>> topUpBalance(@Valid @RequestBody BalanceTopUpRequest request) {
+        return ResponseEntity.ok(ApiResponse.success(userService.topUpBalance(request)));
     }
 
     @PutMapping("/me/change-password")
