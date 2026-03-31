@@ -1,23 +1,27 @@
 package husniddin.online_store.service;
 
 import husniddin.online_store.dto.request.ProductRequest;
+import husniddin.online_store.dto.response.PageResponse;
 import husniddin.online_store.dto.response.ProductResponse;
 import husniddin.online_store.entity.Category;
 import husniddin.online_store.entity.Company;
 import husniddin.online_store.entity.Product;
+import husniddin.online_store.enums.ProductSortType;
 import husniddin.online_store.exception.ResourceNotFoundException;
 import husniddin.online_store.mapper.ProductMapper;
 import husniddin.online_store.repository.CategoryRepository;
 import husniddin.online_store.repository.CommentRepository;
 import husniddin.online_store.repository.CompanyRepository;
 import husniddin.online_store.repository.ProductRepository;
+import husniddin.online_store.specification.ProductSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +32,7 @@ import java.math.RoundingMode;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
+@SuppressWarnings("null")
 public class ProductService {
 
     private final ProductRepository productRepository;
@@ -37,10 +42,31 @@ public class ProductService {
     private final ProductMapper productMapper;
 
     @Transactional(readOnly = true)
-    public Page<ProductResponse> getProducts(String search, Long categoryId, Long companyId,
-                                              BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
-        return productRepository.findWithFilters(search, categoryId, companyId, minPrice, maxPrice, pageable)
+    public PageResponse<ProductResponse> getProducts(
+            String search, Long categoryId, Long companyId,
+            BigDecimal minPrice, BigDecimal maxPrice,
+            ProductSortType sort, int page, int size) {
+
+        Specification<Product> spec = ProductSpecification.withFilters(
+                search, categoryId, companyId, minPrice, maxPrice);
+
+        Page<ProductResponse> result = productRepository
+                .findAll(spec, PageRequest.of(page, size, toSort(sort)))
                 .map(this::mapWithComputedFields);
+
+        return PageResponse.from(result);
+    }
+
+    @lombok.NonNull
+    private Sort toSort(ProductSortType sort) {
+        if (sort == null) return Sort.by(Sort.Direction.DESC, "createdAt");
+        return switch (sort) {
+            case POPULAR       -> Sort.by(Sort.Direction.DESC, "soldQuantity");
+            case NEWEST        -> Sort.by(Sort.Direction.DESC, "createdAt");
+            case PRICE_ASC     -> Sort.by(Sort.Direction.ASC,  "sellPrice");
+            case PRICE_DESC    -> Sort.by(Sort.Direction.DESC, "sellPrice");
+            case DISCOUNT_DESC -> Sort.by(Sort.Direction.DESC, "discountPercent");
+        };
     }
 
     @Transactional(readOnly = true)

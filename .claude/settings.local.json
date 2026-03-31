@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(ls /c/Users/User/Desktop/online-store/online-store/target/classes/*.properties)",
-      "Bash(ls /c/Users/User/Desktop/online-store/online-store/target/classes/*.yml)"
+      "Bash(ls /c/Users/User/Desktop/online-store/online-store/target/classes/*.yml)",
+      "Bash(./mvnw flyway:repair -q)"
     ]
   }
 }

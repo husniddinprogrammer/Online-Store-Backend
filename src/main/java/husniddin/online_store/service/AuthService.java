@@ -4,6 +4,7 @@ import husniddin.online_store.dto.request.*;
 import husniddin.online_store.dto.response.AuthResponse;
 import husniddin.online_store.entity.RefreshToken;
 import husniddin.online_store.entity.User;
+import husniddin.online_store.enums.Role;
 import husniddin.online_store.exception.BadRequestException;
 import husniddin.online_store.exception.EmailAlreadyExistsException;
 import husniddin.online_store.exception.ResourceNotFoundException;

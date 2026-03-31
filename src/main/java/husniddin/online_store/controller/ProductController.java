@@ -2,20 +2,22 @@ package husniddin.online_store.controller;
 
 import husniddin.online_store.dto.request.ProductRequest;
 import husniddin.online_store.dto.response.ApiResponse;
+import husniddin.online_store.dto.response.PageResponse;
 import husniddin.online_store.dto.response.ProductResponse;
+import husniddin.online_store.enums.ProductSortType;
 import husniddin.online_store.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -24,21 +26,38 @@ import java.math.BigDecimal;
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
 @Tag(name = "Products")
+@Validated
 public class ProductController {
 
     private final ProductService productService;
 
     @GetMapping
-    @Operation(summary = "Get all products with filters & pagination")
-    public ResponseEntity<ApiResponse<Page<ProductResponse>>> getProducts(
-            @RequestParam(required = false) String search,
-            @RequestParam(required = false) Long categoryId,
-            @RequestParam(required = false) Long companyId,
-            @RequestParam(required = false) BigDecimal minPrice,
-            @RequestParam(required = false) BigDecimal maxPrice,
-            @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+    @Operation(summary = "Get products with filters, sorting, and pagination")
+    public ResponseEntity<ApiResponse<PageResponse<ProductResponse>>> getProducts(
+            @RequestParam(required = false)
+            @Parameter(description = "Search by product name") String search,
+
+            @RequestParam(required = false)
+            @Parameter(description = "Filter by category ID") Long categoryId,
+
+            @RequestParam(required = false)
+            @Parameter(description = "Filter by company ID") Long companyId,
+
+            @RequestParam(required = false)
+            @Parameter(description = "Minimum sell price") BigDecimal minPrice,
+
+            @RequestParam(required = false)
+            @Parameter(description = "Maximum sell price") BigDecimal maxPrice,
+
+            @RequestParam(required = false, defaultValue = "NEWEST")
+            @Parameter(description = "Sort order: POPULAR, NEWEST, PRICE_ASC, PRICE_DESC, DISCOUNT_DESC")
+            ProductSortType sort,
+
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "20") @Min(1) @Max(100) int size) {
+
         return ResponseEntity.ok(ApiResponse.success(
-                productService.getProducts(search, categoryId, companyId, minPrice, maxPrice, pageable)));
+                productService.getProducts(search, categoryId, companyId, minPrice, maxPrice, sort, page, size)));
     }
 
     @GetMapping("/{id}")

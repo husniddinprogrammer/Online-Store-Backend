@@ -2,6 +2,7 @@ package husniddin.online_store.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -80,6 +81,7 @@ public class Product {
     private Long updatedBy;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @BatchSize(size = 30)
     @Builder.Default
     private List<ProductImage> images = new ArrayList<>();
 }
