@@ -32,9 +32,6 @@ public class FileStorageService {
     @Value("${app.upload.base-dir}")
     private String baseDir;
 
-    @Value("${app.upload.base-url}")
-    private String baseUrl;
-
     @Value("${app.upload.max-file-size-mb}")
     private int maxFileSizeMb;
 
@@ -194,9 +191,8 @@ public class FileStorageService {
     }
 
     private String buildPublicUrl(String subDir, String filename) {
-        String base = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
         String dir  = baseDir.startsWith("/") ? baseDir : "/" + baseDir;
-        return base + dir + "/" + subDir + "/" + filename;
+        return dir + "/" + subDir + "/" + filename;
     }
 
     private String extractExtension(String filename) {
