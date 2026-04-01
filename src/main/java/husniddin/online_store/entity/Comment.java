@@ -9,7 +9,8 @@ import org.hibernate.annotations.SQLRestriction;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "comments")
+@Table(name = "comments",
+        uniqueConstraints = @UniqueConstraint(name = "uq_comments_user_product", columnNames = {"user_id", "product_id"}))
 @SQLDelete(sql = "UPDATE comments SET is_deleted = true WHERE id = ?")
 @SQLRestriction("is_deleted = false")
 @Getter

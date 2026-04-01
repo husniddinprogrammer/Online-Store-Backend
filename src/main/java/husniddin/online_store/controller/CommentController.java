@@ -2,7 +2,9 @@ package husniddin.online_store.controller;
 
 import husniddin.online_store.dto.request.CommentRequest;
 import husniddin.online_store.dto.response.ApiResponse;
+import husniddin.online_store.dto.response.CommentEligibilityDto;
 import husniddin.online_store.dto.response.CommentResponse;
+import husniddin.online_store.dto.response.ProductResponse;
 import husniddin.online_store.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -18,12 +20,35 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping({"/api/comments", "/api/reviews"})
 @RequiredArgsConstructor
 @Tag(name = "Comments & Reviews")
 public class CommentController {
 
     private final CommentService commentService;
+
+    @GetMapping("/my")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Get my reviews")
+    public ResponseEntity<ApiResponse<Page<CommentResponse>>> getMyComments(
+            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(ApiResponse.success(commentService.getMyComments(pageable)));
+    }
+
+    @GetMapping("/pending-review")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Products I received (DELIVERED) but haven't reviewed yet")
+    public ResponseEntity<ApiResponse<Page<ProductResponse>>> getDeliveredUnreviewed(
+            @PageableDefault(size = 10) Pageable pageable) {
+        return ResponseEntity.ok(ApiResponse.success(commentService.getDeliveredUnreviewed(pageable)));
+    }
+
+    @GetMapping("/eligibility/{productId}")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Check if I can review a product (delivered + already commented?)")
+    public ResponseEntity<ApiResponse<CommentEligibilityDto>> checkEligibility(@PathVariable Long productId) {
+        return ResponseEntity.ok(ApiResponse.success(commentService.checkCommentEligibility(productId)));
+    }
 
     @GetMapping("/product/{productId}")
     @Operation(summary = "Get comments for a product")
