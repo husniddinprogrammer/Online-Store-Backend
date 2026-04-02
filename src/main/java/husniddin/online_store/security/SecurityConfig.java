@@ -52,22 +52,34 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(PUBLIC_URLS).permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
-                .requestMatchers("/api/users/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY")
-                .requestMatchers("/api/orders/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY")
-                .requestMatchers("/api/carts/**").hasRole("CUSTOMER")
-                .requestMatchers("/api/favorite-products/**").hasAnyRole("CUSTOMER", "ADMIN")
+
+                // ── Global write-method block: VIEWER may not call POST/PUT/DELETE/PATCH ──
+                .requestMatchers(HttpMethod.POST,   "/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY")
+                .requestMatchers(HttpMethod.PUT,    "/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY")
+                .requestMatchers(HttpMethod.DELETE, "/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY")
+                .requestMatchers(HttpMethod.PATCH,  "/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY")
+
+                // ── Route-level access (GET for all, writes already blocked above for VIEWER) ──
+                .requestMatchers("/api/users/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY", "VIEWER")
+                .requestMatchers("/api/orders/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY", "VIEWER")
+                .requestMatchers("/api/admin/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "VIEWER")
+                .requestMatchers("/api/carts/**").hasAnyRole("CUSTOMER", "VIEWER")
+                .requestMatchers("/api/favorite-products/**").hasAnyRole("CUSTOMER", "ADMIN", "VIEWER")
                 .requestMatchers("/api/notifications/**").authenticated()
                 .requestMatchers("/api/addresses/**").authenticated()
-                .requestMatchers(HttpMethod.POST, "/api/categories/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/categories/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+
+                // ── Admin-only write operations (belt-and-suspenders after global block) ──
+                .requestMatchers(HttpMethod.POST,   "/api/categories/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .requestMatchers(HttpMethod.PUT,    "/api/categories/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/categories/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers(HttpMethod.POST, "/api/companies/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/companies/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .requestMatchers(HttpMethod.POST,   "/api/companies/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .requestMatchers(HttpMethod.PUT,    "/api/companies/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/companies/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers(HttpMethod.POST, "/api/products/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/products/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .requestMatchers(HttpMethod.POST,   "/api/products/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .requestMatchers(HttpMethod.PUT,    "/api/products/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
                 .requestMatchers("/api/posters/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+
                 .anyRequest().authenticated()
             )
             .authenticationProvider(authenticationProvider())

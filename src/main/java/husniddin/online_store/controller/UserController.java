@@ -54,8 +54,8 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
-    @Operation(summary = "Get all users (Admin only)")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'VIEWER')")
+    @Operation(summary = "Get all users (Admin/Viewer)")
     public ResponseEntity<ApiResponse<Page<UserResponse>>> getAllUsers(
             @RequestParam(required = false) String search,
             @PageableDefault(size = 20) Pageable pageable) {
@@ -63,8 +63,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
-    @Operation(summary = "Get user by ID (Admin only)")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'VIEWER')")
+    @Operation(summary = "Get user by ID (Admin/Viewer)")
     public ResponseEntity<ApiResponse<UserResponse>> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(ApiResponse.success(userService.getUserById(id)));
     }

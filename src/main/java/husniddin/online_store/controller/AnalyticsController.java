@@ -22,7 +22,7 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/api/admin/analytics")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+@PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'VIEWER')")
 @SecurityRequirement(name = "bearerAuth")
 @Tag(name = "Analytics")
 public class AnalyticsController {

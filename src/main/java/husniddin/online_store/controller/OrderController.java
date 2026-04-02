@@ -56,8 +56,8 @@ public class OrderController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'DELIVERY')")
-    @Operation(summary = "Get all orders (Admin/Delivery)")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'DELIVERY', 'VIEWER')")
+    @Operation(summary = "Get all orders (Admin/Delivery/Viewer)")
     public ResponseEntity<ApiResponse<Page<OrderResponse>>> getAllOrders(
             @RequestParam(required = false) OrderStatus status,
             @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
