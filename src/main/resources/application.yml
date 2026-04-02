@@ -77,7 +77,8 @@ app:
     secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
     access-token-expiration: ${JWT_ACCESS_EXPIRATION:259200000}    # 3 days
     refresh-token-expiration: ${JWT_REFRESH_EXPIRATION:2592000000} # 30 days
-  frontend-url: ${FRONTEND_URL:http://localhost:3000}
+  # frontend-url: ${FRONTEND_URL:http://localhost:3000}
+  frontend-url: ${FRONTEND_URL:https://online-store-beta.uz/}
   email-verification-expiry-hours: 24
   password-reset-expiry-minutes: 500
   upload:

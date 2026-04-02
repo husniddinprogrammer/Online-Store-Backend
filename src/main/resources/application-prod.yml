@@ -1,16 +1,19 @@
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/onlinest_database
+    username: onlinest_database
+    password: husniddin2003
     hikari:
       maximum-pool-size: 20
       minimum-idle: 10
   jpa:
     show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
 
 server:
-  port: ${SERVER_PORT:8080}
+  port: 8080
 
 logging:
   level:
