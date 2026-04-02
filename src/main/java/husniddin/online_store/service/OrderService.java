@@ -158,12 +158,7 @@ public class OrderService {
         Page<Order> orders = status != null
                 ? orderRepository.findByUserIdAndStatus(user.getId(), status, pageable)
                 : orderRepository.findByUserId(user.getId(), pageable);
-        return orders.map(order -> {
-            OrderResponse response = orderMapper.toResponse(order);
-            response.setItems(orderItemRepository.findByOrderId(order.getId())
-                    .stream().map(orderMapper::toItemResponse).toList());
-            return response;
-        });
+        return orders.map(this::buildOrderResponse);
     }
 
     @Transactional(readOnly = true)
@@ -173,10 +168,7 @@ public class OrderService {
         if (!order.getUser().getId().equals(currentUser.getId())) {
             throw new ForbiddenException("Access denied");
         }
-        OrderResponse response = orderMapper.toResponse(order);
-        response.setItems(orderItemRepository.findByOrderId(id)
-                .stream().map(orderMapper::toItemResponse).toList());
-        return response;
+        return buildOrderResponse(order);
     }
 
     @Transactional(readOnly = true)
@@ -184,7 +176,7 @@ public class OrderService {
         Page<Order> orders = status != null
                 ? orderRepository.findByStatus(status, pageable)
                 : orderRepository.findAll(pageable);
-        return orders.map(orderMapper::toResponse);
+        return orders.map(this::buildOrderResponse);
     }
 
     public OrderResponse updateOrderStatus(Long id, OrderStatus newStatus) {
@@ -209,7 +201,7 @@ public class OrderService {
             notificationService.sendToUser(order.getUser(), NotificationType.INFO, customerMessage);
         }
 
-        return orderMapper.toResponse(saved);
+        return buildOrderResponse(saved);
     }
 
     public OrderResponse cancelOrder(Long id) {
@@ -233,7 +225,7 @@ public class OrderService {
             productRepository.save(product);
         });
 
-        return orderMapper.toResponse(orderRepository.save(order));
+        return buildOrderResponse(orderRepository.save(order));
     }
 
     private Order findOrderById(Long id) {
@@ -245,5 +237,14 @@ public class OrderService {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    }
+
+    private OrderResponse buildOrderResponse(Order order) {
+        OrderResponse response = orderMapper.toResponse(order);
+        response.setItems(orderItemRepository.findByOrderId(order.getId())
+                .stream()
+                .map(orderMapper::toItemResponse)
+                .toList());
+        return response;
     }
 }

@@ -27,6 +27,13 @@ public class CommentController {
 
     private final CommentService commentService;
 
+    @GetMapping
+    @Operation(summary = "Get all comments")
+    public ResponseEntity<ApiResponse<Page<CommentResponse>>> getAllComments(
+            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(ApiResponse.success(commentService.getAllComments(pageable)));
+    }
+
     @GetMapping("/my")
     @SecurityRequirement(name = "bearerAuth")
     @Operation(summary = "Get my reviews")

@@ -35,6 +35,11 @@ public class CommentService {
     private final ProductMapper productMapper;
 
     @Transactional(readOnly = true)
+    public Page<CommentResponse> getAllComments(Pageable pageable) {
+        return commentRepository.findAll(pageable).map(commentMapper::toResponse);
+    }
+
+    @Transactional(readOnly = true)
     public Page<CommentResponse> getProductComments(Long productId, Pageable pageable) {
         return commentRepository.findByProductId(productId, pageable).map(commentMapper::toResponse);
     }
