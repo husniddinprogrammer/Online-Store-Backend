@@ -1,7 +1,7 @@
 package husniddin.online_store.specification;
 
 import husniddin.online_store.entity.Product;
-import jakarta.persistence.criteria.Predicate;
+import javax.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;
@@ -27,7 +27,7 @@ public final class ProductSpecification {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (search != null && !search.isBlank()) {
+            if (search != null && !search.trim().isEmpty()) {
                 predicates.add(
                     cb.like(cb.lower(root.get("name")), "%" + search.trim().toLowerCase() + "%")
                 );

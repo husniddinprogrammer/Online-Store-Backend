@@ -4,9 +4,8 @@ import husniddin.online_store.dto.response.CommentResponse;
 import husniddin.online_store.entity.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = "spring")
 public interface CommentMapper {
 
     @Mapping(target = "productId", source = "product.id")

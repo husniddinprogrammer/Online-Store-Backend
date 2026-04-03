@@ -1,10 +1,10 @@
 package husniddin.online_store.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "comments",
         uniqueConstraints = @UniqueConstraint(name = "uq_comments_user_product", columnNames = {"user_id", "product_id"}))
 @SQLDelete(sql = "UPDATE comments SET is_deleted = true WHERE id = ?")
-@SQLRestriction("is_deleted = false")
+@Where(clause = "is_deleted = false")
 @Getter
 @Setter
 @NoArgsConstructor

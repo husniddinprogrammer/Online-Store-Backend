@@ -8,9 +8,8 @@ import husniddin.online_store.entity.Company;
 import husniddin.online_store.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
+@Mapper(componentModel = "spring",
         uses = {CategoryMapper.class, CompanyMapper.class, ProductImageMapper.class})
 public interface ProductMapper {
 

@@ -39,15 +39,14 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     long countOrdersInPeriod(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
 
     /** Returns rows of [date::String, revenue::BigDecimal] for chart rendering (all non-deleted, non-cancelled). */
-    @Query(value = """
-            SELECT TO_CHAR(created_at, 'YYYY-MM-DD') AS chart_date,
-                   COALESCE(SUM(total_amount), 0)    AS revenue
-            FROM orders
-            WHERE status <> 'CANCELLED'
-              AND is_deleted = false
-              AND created_at BETWEEN :from AND :to
-            GROUP BY TO_CHAR(created_at, 'YYYY-MM-DD')
-            ORDER BY chart_date
-            """, nativeQuery = true)
+    @Query(value = "SELECT TO_CHAR(created_at, 'YYYY-MM-DD') AS chart_date, " +
+                   "COALESCE(SUM(total_amount), 0) AS revenue " +
+                   "FROM orders " +
+                   "WHERE status <> 'CANCELLED' " +
+                   "AND is_deleted = false " +
+                   "AND created_at BETWEEN :from AND :to " +
+                   "GROUP BY TO_CHAR(created_at, 'YYYY-MM-DD') " +
+                   "ORDER BY chart_date",
+           nativeQuery = true)
     List<Object[]> getRevenueChartData(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
 }

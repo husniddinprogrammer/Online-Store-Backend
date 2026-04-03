@@ -1,9 +1,9 @@
 package husniddin.online_store.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.Where;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "carts")
 @SQLDelete(sql = "UPDATE carts SET is_deleted = true WHERE id = ?")
-@SQLRestriction("is_deleted = false")
+@Where(clause = "is_deleted = false")
 @Getter
 @Setter
 @NoArgsConstructor

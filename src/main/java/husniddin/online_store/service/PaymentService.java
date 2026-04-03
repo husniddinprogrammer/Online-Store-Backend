@@ -5,7 +5,6 @@ import husniddin.online_store.dto.response.PaymentResponse;
 import husniddin.online_store.entity.Order;
 import husniddin.online_store.entity.Payment;
 import husniddin.online_store.entity.User;
-import husniddin.online_store.enums.NotificationType;
 import husniddin.online_store.enums.OrderStatus;
 import husniddin.online_store.enums.PayMethod;
 import husniddin.online_store.enums.PayStatus;
@@ -32,7 +31,6 @@ public class PaymentService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final PaymentMapper paymentMapper;
-    private final NotificationService notificationService;
 
     public PaymentResponse processPayment(PaymentRequest request) {
         Order order = orderRepository.findById(request.getOrderId())
@@ -75,15 +73,6 @@ public class PaymentService {
 
         order.setStatus(OrderStatus.PAID);
         orderRepository.save(order);
-
-        // Confirm payment to the customer
-        notificationService.sendToUser(user, NotificationType.INFO,
-                "To'lov tasdiqlandi: " + order.getTotalAmount() + " - buyurtma #" + order.getId());
-
-        // Alert admins so they can start processing the order
-        notificationService.sendToAdmins(NotificationType.INFO,
-                "To'lov qabul qilindi: buyurtma #" + order.getId()
-                + " - mijoz: " + user.getName() + " - summa: " + order.getTotalAmount());
 
         log.info("Payment processed for order: {}", order.getId());
         return paymentMapper.toResponse(savedPayment);

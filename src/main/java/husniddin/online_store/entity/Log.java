@@ -1,7 +1,7 @@
 package husniddin.online_store.entity;
 
 import husniddin.online_store.enums.LogAction;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 

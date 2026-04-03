@@ -79,7 +79,7 @@ public class CartService {
             cartItemRepository.save(cartItem);
         }
 
-        Cart cart = cartRepository.findByUserId(getCurrentUser().getId()).orElseThrow();
+        Cart cart = cartRepository.findByUserId(getCurrentUser().getId()).orElseThrow(() -> new RuntimeException("Not found"));
         return buildCartResponse(cart);
     }
 
@@ -122,7 +122,7 @@ public class CartService {
                     .findFirst()
                     .ifPresent(img -> r.setProductImageLink(img.getImageLink()));
             return r;
-        }).toList();
+        }).collect(java.util.stream.Collectors.toList());
 
         BigDecimal total = itemResponses.stream()
                 .map(CartItemResponse::getTotalPrice)

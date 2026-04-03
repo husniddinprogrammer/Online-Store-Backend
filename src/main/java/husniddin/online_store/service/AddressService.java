@@ -29,7 +29,7 @@ public class AddressService {
     public List<AddressResponse> getMyAddresses() {
         User user = getCurrentUser();
         return addressRepository.findByUserId(user.getId())
-                .stream().map(addressMapper::toResponse).toList();
+                .stream().map(addressMapper::toResponse).collect(java.util.stream.Collectors.toList());
     }
 
     public AddressResponse createAddress(AddressRequest request) {

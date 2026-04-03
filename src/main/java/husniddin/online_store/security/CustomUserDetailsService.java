@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getEmail())
                 .password(user.getPassword())
-                .authorities(List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name())))
+                .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole().name())))
                 .accountLocked(user.isBlocked())
                 .build();
     }

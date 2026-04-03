@@ -1,11 +1,11 @@
 package husniddin.online_store.entity;
 
 import husniddin.online_store.enums.Role;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
         @Index(name = "idx_users_email", columnList = "email", unique = true)
 })
 @SQLDelete(sql = "UPDATE users SET is_deleted = true WHERE id = ?")
-@SQLRestriction("is_deleted = false")
+@Where(clause = "is_deleted = false")
 @Getter
 @Setter
 @NoArgsConstructor

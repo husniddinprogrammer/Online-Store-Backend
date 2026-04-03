@@ -28,26 +28,22 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
      * Returns true if the user has at least one PAID or DELIVERED order that contains this product.
      * Single JOIN query — no N+1.
      */
-    @Query("""
-            SELECT COUNT(oi) > 0
-            FROM OrderItem oi
-            JOIN oi.order o
-            WHERE o.user.id    = :userId
-              AND oi.product.id = :productId
-              AND o.status IN ('PAID', 'DELIVERED')
-            """)
+    @Query("SELECT COUNT(oi) > 0 " +
+           "FROM OrderItem oi " +
+           "JOIN oi.order o " +
+           "WHERE o.user.id = :userId " +
+           "AND oi.product.id = :productId " +
+           "AND o.status IN ('PAID', 'DELIVERED')")
     boolean existsVerifiedPurchase(@Param("userId") Long userId, @Param("productId") Long productId);
 
     /**
      * Returns true if the user has at least one DELIVERED order containing this product.
      */
-    @Query("""
-            SELECT COUNT(oi) > 0
-            FROM OrderItem oi
-            JOIN oi.order o
-            WHERE o.user.id    = :userId
-              AND oi.product.id = :productId
-              AND o.status      = husniddin.online_store.enums.OrderStatus.DELIVERED
-            """)
+    @Query("SELECT COUNT(oi) > 0 " +
+           "FROM OrderItem oi " +
+           "JOIN oi.order o " +
+           "WHERE o.user.id = :userId " +
+           "AND oi.product.id = :productId " +
+           "AND o.status = husniddin.online_store.enums.OrderStatus.DELIVERED")
     boolean existsDeliveredPurchase(@Param("userId") Long userId, @Param("productId") Long productId);
 }

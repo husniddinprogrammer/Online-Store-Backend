@@ -30,7 +30,7 @@ public class ProductImageService {
     @Transactional(readOnly = true)
     public List<ProductImageResponse> getProductImages(Long productId) {
         return productImageRepository.findByProductId(productId)
-                .stream().map(productImageMapper::toResponse).toList();
+                .stream().map(productImageMapper::toResponse).collect(java.util.stream.Collectors.toList());
     }
 
     /**

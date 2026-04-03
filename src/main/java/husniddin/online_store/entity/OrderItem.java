@@ -1,18 +1,18 @@
 package husniddin.online_store.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "order_items")
 @SQLDelete(sql = "UPDATE order_items SET is_deleted = true WHERE id = ?")
-@SQLRestriction("is_deleted = false")
+@Where(clause = "is_deleted = false")
 @Getter
 @Setter
 @NoArgsConstructor

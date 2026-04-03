@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -42,10 +43,15 @@ public class UserService {
      */
     @Transactional(readOnly = true)
     public Page<UserResponse> getAllUsers(String search, Pageable pageable) {
-        List<Role> excluded = switch (getCurrentRole()) {
-            case SUPER_ADMIN -> List.of(Role.SUPER_ADMIN);
-            default          -> List.of(Role.SUPER_ADMIN, Role.ADMIN, Role.DELIVERY);
-        };
+        List<Role> excluded;
+        switch (getCurrentRole()) {
+            case SUPER_ADMIN:
+                excluded = Arrays.asList(Role.SUPER_ADMIN);
+                break;
+            default:
+                excluded = Arrays.asList(Role.SUPER_ADMIN, Role.ADMIN, Role.DELIVERY);
+                break;
+        }
         return userRepository.searchUsersExcluding(search, excluded, pageable)
                 .map(userMapper::toResponse);
     }

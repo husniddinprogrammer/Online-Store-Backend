@@ -11,10 +11,13 @@ import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -26,8 +29,8 @@ public class FileStorageService {
     private static final double QUALITY = 0.70;
     private static final double HIGH_QUALITY = 0.95;
     private static final long SMALL_FILE_THRESHOLD_KB = 50;
-    private static final Set<String> ALLOWED_CONTENT_TYPES = Set.of("image/jpeg", "image/png");
-    private static final Set<String> ALLOWED_EXTENSIONS   = Set.of("jpg", "jpeg", "png");
+    private static final Set<String> ALLOWED_CONTENT_TYPES = new HashSet<>(Arrays.asList("image/jpeg", "image/png"));
+    private static final Set<String> ALLOWED_EXTENSIONS   = new HashSet<>(Arrays.asList("jpg", "jpeg", "png"));
 
     @Value("${app.upload.base-dir}")
     private String baseDir;
@@ -77,7 +80,7 @@ public class FileStorageService {
             Files.createDirectories(targetDir);
             Path target = targetDir.resolve(filename);
 
-            BufferedImage original = ImageIO.read(file.getInputStream());
+            BufferedImage original = ImageIO.read(new ByteArrayInputStream(file.getBytes()));
             if (original == null) {
                 throw new BadRequestException("Cannot read image file: " + file.getOriginalFilename());
             }
@@ -117,8 +120,8 @@ public class FileStorageService {
             log.warn("Rejected '{}': {}KB exceeds {}MB limit",
                     file.getOriginalFilename(), file.getSize() / 1024, maxFileSizeMb);
             throw new BadRequestException(
-                    "File '%s' exceeds the %dMB size limit (actual: %dKB)."
-                            .formatted(file.getOriginalFilename(), maxFileSizeMb, file.getSize() / 1024));
+                    String.format("File '%s' exceeds the %dMB size limit (actual: %dKB).",
+                            file.getOriginalFilename(), maxFileSizeMb, file.getSize() / 1024));
         }
         log.debug("Size OK: '{}' ({}KB)", file.getOriginalFilename(), file.getSize() / 1024);
     }
@@ -131,7 +134,7 @@ public class FileStorageService {
             log.warn("Rejected '{}': unsupported type '{}' / extension '{}'",
                     file.getOriginalFilename(), contentType, extension);
             throw new BadRequestException(
-                    "Unsupported file type '%s'. Only jpg, jpeg, and png are accepted.".formatted(contentType));
+                    String.format("Unsupported file type '%s'. Only jpg, jpeg, and png are accepted.", contentType));
         }
         log.debug("Type OK: '{}' ({})", file.getOriginalFilename(), contentType);
     }
@@ -152,7 +155,7 @@ public class FileStorageService {
             log.debug("Processing image: {}KB → {}% quality, max {}x{} → '{}'",
                     fileSizeKB, (int) (quality * 100), MAX_DIMENSION, MAX_DIMENSION, target.toAbsolutePath());
 
-            Thumbnails.of(file.getInputStream())
+            Thumbnails.of(new ByteArrayInputStream(file.getBytes()))
                     .size(MAX_DIMENSION, MAX_DIMENSION)
                     .keepAspectRatio(true)
                     .outputFormat("jpg")

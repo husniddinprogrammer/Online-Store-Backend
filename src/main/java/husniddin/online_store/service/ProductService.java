@@ -16,8 +16,6 @@ import husniddin.online_store.repository.ProductRepository;
 import husniddin.online_store.specification.ProductSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -60,30 +58,29 @@ public class ProductService {
     @lombok.NonNull
     private Sort toSort(ProductSortType sort) {
         if (sort == null) return Sort.by(Sort.Direction.DESC, "createdAt");
-        return switch (sort) {
-            case POPULAR       -> Sort.by(Sort.Direction.DESC, "soldQuantity");
-            case NEWEST        -> Sort.by(Sort.Direction.DESC, "createdAt");
-            case PRICE_ASC     -> Sort.by(Sort.Direction.ASC,  "sellPrice");
-            case PRICE_DESC    -> Sort.by(Sort.Direction.DESC, "sellPrice");
-            case DISCOUNT_DESC -> Sort.by(Sort.Direction.DESC, "discountPercent");
-            case DISCOUNT_ASC  -> Sort.by(Sort.Direction.ASC,  "discountPercent");
-            case ID_DESC       -> Sort.by(Sort.Direction.DESC, "id");
-            case ID_ASC        -> Sort.by(Sort.Direction.ASC,  "id");
-            case STOCK_DESC    -> Sort.by(Sort.Direction.DESC, "stockQuantity");
-            case STOCK_ASC     -> Sort.by(Sort.Direction.ASC,  "stockQuantity");
-            case SOLD_DESC     -> Sort.by(Sort.Direction.DESC, "soldQuantity");
-            case SOLD_ASC      -> Sort.by(Sort.Direction.ASC,  "soldQuantity");
-        };
+        switch (sort) {
+            case POPULAR:       return Sort.by(Sort.Direction.DESC, "soldQuantity");
+            case NEWEST:        return Sort.by(Sort.Direction.DESC, "createdAt");
+            case PRICE_ASC:     return Sort.by(Sort.Direction.ASC,  "sellPrice");
+            case PRICE_DESC:    return Sort.by(Sort.Direction.DESC, "sellPrice");
+            case DISCOUNT_DESC: return Sort.by(Sort.Direction.DESC, "discountPercent");
+            case DISCOUNT_ASC:  return Sort.by(Sort.Direction.ASC,  "discountPercent");
+            case ID_DESC:       return Sort.by(Sort.Direction.DESC, "id");
+            case ID_ASC:        return Sort.by(Sort.Direction.ASC,  "id");
+            case STOCK_DESC:    return Sort.by(Sort.Direction.DESC, "stockQuantity");
+            case STOCK_ASC:     return Sort.by(Sort.Direction.ASC,  "stockQuantity");
+            case SOLD_DESC:     return Sort.by(Sort.Direction.DESC, "soldQuantity");
+            case SOLD_ASC:      return Sort.by(Sort.Direction.ASC,  "soldQuantity");
+            default:            throw new IllegalArgumentException("Unknown sort: " + sort);
+        }
     }
 
     @Transactional(readOnly = true)
-    @Cacheable(value = "products", key = "#id")
     public ProductResponse getProductById(Long id) {
         Product product = findProductById(id);
         return mapWithComputedFields(product);
     }
 
-    @CacheEvict(value = "products", allEntries = true)
     public ProductResponse createProduct(ProductRequest request) {
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("Category", request.getCategoryId()));
@@ -104,7 +101,6 @@ public class ProductService {
         return mapWithComputedFields(productRepository.save(product));
     }
 
-    @CacheEvict(value = "products", key = "#id")
     public ProductResponse updateProduct(Long id, ProductRequest request) {
         Product product = findProductById(id);
         Category category = categoryRepository.findById(request.getCategoryId())
@@ -124,7 +120,6 @@ public class ProductService {
         return mapWithComputedFields(productRepository.save(product));
     }
 
-    @CacheEvict(value = "products", key = "#id")
     public void deleteProduct(Long id) {
         Product product = findProductById(id);
         product.setDeleted(true);

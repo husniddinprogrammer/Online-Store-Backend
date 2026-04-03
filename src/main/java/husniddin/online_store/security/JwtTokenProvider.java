@@ -1,14 +1,14 @@
 package husniddin.online_store.security;
 
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,9 +24,9 @@ public class JwtTokenProvider {
     @Value("${app.jwt.access-token-expiration}")
     private long accessTokenExpiration;
 
-    private SecretKey getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
-        return Keys.hmacShaKeyFor(keyBytes);
+    private Key getSigningKey() {
+        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(jwtSecret);
+        return new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS512.getJcaName());
     }
 
     public String generateAccessToken(UserDetails userDetails) {
@@ -39,11 +39,11 @@ public class JwtTokenProvider {
 
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
         return Jwts.builder()
-                .claims(extraClaims)
-                .subject(userDetails.getUsername())
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(getSigningKey())
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(SignatureAlgorithm.HS512, getSigningKey())
                 .compact();
     }
 
@@ -71,10 +71,9 @@ public class JwtTokenProvider {
 
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .verifyWith(getSigningKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+                .setSigningKey(getSigningKey())
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     public long getAccessTokenExpiration() {

@@ -1,6 +1,6 @@
 package husniddin.online_store.dto.request;
 
-import jakarta.validation.constraints.*;
+import javax.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDate;

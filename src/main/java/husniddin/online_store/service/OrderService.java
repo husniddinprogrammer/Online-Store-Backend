@@ -3,7 +3,6 @@ package husniddin.online_store.service;
 import husniddin.online_store.dto.request.CreateOrderRequest;
 import husniddin.online_store.dto.response.OrderResponse;
 import husniddin.online_store.entity.*;
-import husniddin.online_store.enums.NotificationType;
 import husniddin.online_store.enums.OrderStatus;
 import husniddin.online_store.enums.PayMethod;
 import husniddin.online_store.enums.PayStatus;
@@ -40,7 +39,6 @@ public class OrderService {
     private final UserRepository userRepository;
     private final PaymentRepository paymentRepository;
     private final OrderMapper orderMapper;
-    private final NotificationService notificationService;
 
     public OrderResponse createOrderFromCart(CreateOrderRequest request) {
         // Acquire row-level lock on user to prevent concurrent balance mutations
@@ -136,19 +134,10 @@ public class OrderService {
                 .status(PayStatus.PAID)
                 .build());
 
-        // Notify customer
-        notificationService.sendToUser(user, NotificationType.INFO,
-                "Buyurtmangiz #" + order.getId() + " to'landi va qabul qilindi! Summa: " + totalAmount);
-
-        // Notify admins
-        notificationService.sendToAdmins(NotificationType.INFO,
-                "Yangi buyurtma #" + order.getId() + " - mijoz: " + user.getName()
-                + " - jami summa: " + totalAmount);
-
         log.info("Order {} created and paid via balance for user: {}", order.getId(), user.getEmail());
 
         OrderResponse response = orderMapper.toResponse(order);
-        response.setItems(orderItems.stream().map(orderMapper::toItemResponse).toList());
+        response.setItems(orderItems.stream().map(orderMapper::toItemResponse).collect(Collectors.toList()));
         return response;
     }
 
@@ -188,18 +177,6 @@ public class OrderService {
 
         order.setStatus(newStatus);
         Order saved = orderRepository.save(order);
-
-        // Send targeted customer notifications only for meaningful status transitions
-        String customerMessage = switch (newStatus) {
-            case SHIPPED   -> "Yaxshi xabar! Sizning buyurtmangiz #" + order.getId() + " yuborildi va yo'lda.";
-            case DELIVERED -> "Buyurtmangiz #" + order.getId() + " yetkazib berildi. Xaridingiz bilan qoling!";
-            case PAID      -> "Buyurtma #" + order.getId() + " uchun to'lov tasdiqlandi. Buyurtmangizni tayyorlayapmiz.";
-            case CANCELLED -> "Buyurtmangiz #" + order.getId() + " bekor qilindi.";
-            default        -> null;
-        };
-        if (customerMessage != null) {
-            notificationService.sendToUser(order.getUser(), NotificationType.INFO, customerMessage);
-        }
 
         return buildOrderResponse(saved);
     }
@@ -244,7 +221,7 @@ public class OrderService {
         response.setItems(orderItemRepository.findByOrderId(order.getId())
                 .stream()
                 .map(orderMapper::toItemResponse)
-                .toList());
+                .collect(Collectors.toList()));
         return response;
     }
 }

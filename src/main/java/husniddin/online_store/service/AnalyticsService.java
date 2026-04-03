@@ -12,8 +12,6 @@ import husniddin.online_store.repository.ProductRepository;
 import husniddin.online_store.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,17 +34,6 @@ public class AnalyticsService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
-    /**
-     * Returns aggregated analytics for the requested period.
-     * Results are cached per period + date range to avoid repeated DB hits.
-     * Cache name is "analytics:{PERIOD}" so TTL is configured per-period in RedisCacheConfig.
-     */
-    @Caching(cacheable = {
-        @Cacheable(value = "analytics:DAILY",   condition = "#period.name() == 'DAILY'",   key = "'daily'"),
-        @Cacheable(value = "analytics:WEEKLY",  condition = "#period.name() == 'WEEKLY'",  key = "'weekly'"),
-        @Cacheable(value = "analytics:MONTHLY", condition = "#period.name() == 'MONTHLY'", key = "'monthly'"),
-        @Cacheable(value = "analytics:CUSTOM",  condition = "#period.name() == 'CUSTOM'",  key = "#fromDate + ':' + #toDate + ':' + #topLimit")
-    })
     public AnalyticsResponse getAnalytics(AnalyticsPeriod period, LocalDate fromDate, LocalDate toDate, int topLimit) {
         if (period == AnalyticsPeriod.CUSTOM) {
             if (fromDate == null || toDate == null) {
@@ -89,12 +77,13 @@ public class AnalyticsService {
 
     private LocalDateTime[] resolveDateRange(AnalyticsPeriod period, LocalDate fromDate, LocalDate toDate) {
         LocalDate today = LocalDate.now();
-        return switch (period) {
-            case DAILY   -> new LocalDateTime[]{today.atStartOfDay(), today.atTime(LocalTime.MAX)};
-            case WEEKLY  -> new LocalDateTime[]{today.minusDays(6).atStartOfDay(), today.atTime(LocalTime.MAX)};
-            case MONTHLY -> new LocalDateTime[]{today.minusDays(29).atStartOfDay(), today.atTime(LocalTime.MAX)};
-            case CUSTOM  -> new LocalDateTime[]{fromDate.atStartOfDay(), toDate.atTime(LocalTime.MAX)};
-        };
+        switch (period) {
+            case DAILY:   return new LocalDateTime[]{today.atStartOfDay(), today.atTime(LocalTime.MAX)};
+            case WEEKLY:  return new LocalDateTime[]{today.minusDays(6).atStartOfDay(), today.atTime(LocalTime.MAX)};
+            case MONTHLY: return new LocalDateTime[]{today.minusDays(29).atStartOfDay(), today.atTime(LocalTime.MAX)};
+            case CUSTOM:  return new LocalDateTime[]{fromDate.atStartOfDay(), toDate.atTime(LocalTime.MAX)};
+            default:      throw new IllegalArgumentException("Unknown period: " + period);
+        }
     }
 
     private List<TopSellingProductDto> fetchTopProducts(LocalDateTime from, LocalDateTime to, int limit) {
@@ -107,7 +96,7 @@ public class AnalyticsService {
                         ((Number) row[2]).longValue(),
                         new BigDecimal(row[3].toString())
                 ))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private List<RevenueChartPointDto> fetchRevenueChart(LocalDateTime from, LocalDateTime to) {
@@ -117,7 +106,7 @@ public class AnalyticsService {
                         LocalDate.parse((String) row[0]),
                         new BigDecimal(row[1].toString())
                 ))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private BigDecimal nullSafe(BigDecimal value) {

@@ -1,13 +1,13 @@
 package husniddin.online_store.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.Where;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
@@ -20,7 +20,7 @@ import java.util.List;
         @Index(name = "idx_products_name", columnList = "name")
 })
 @SQLDelete(sql = "UPDATE products SET is_deleted = true WHERE id = ?")
-@SQLRestriction("is_deleted = false")
+@Where(clause = "is_deleted = false")
 @Getter
 @Setter
 @NoArgsConstructor

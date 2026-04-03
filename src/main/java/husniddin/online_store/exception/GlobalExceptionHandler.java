@@ -2,7 +2,7 @@ package husniddin.online_store.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ProblemDetail;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
@@ -18,84 +18,74 @@ import java.util.Map;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    private Map<String, Object> errorBody(HttpStatus status, String title, String detail) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("status", status.value());
+        body.put("title", title);
+        body.put("detail", detail);
+        body.put("timestamp", Instant.now().toString());
+        return body;
+    }
+
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ProblemDetail handleResourceNotFound(ResourceNotFoundException ex) {
-        ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
-        detail.setTitle("Resource Not Found");
-        detail.setProperty("timestamp", Instant.now());
-        return detail;
+    public ResponseEntity<Map<String, Object>> handleResourceNotFound(ResourceNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(errorBody(HttpStatus.NOT_FOUND, "Resource Not Found", ex.getMessage()));
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ProblemDetail handleBadRequest(BadRequestException ex) {
-        ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
-        detail.setTitle("Bad Request");
-        detail.setProperty("timestamp", Instant.now());
-        return detail;
+    public ResponseEntity<Map<String, Object>> handleBadRequest(BadRequestException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(errorBody(HttpStatus.BAD_REQUEST, "Bad Request", ex.getMessage()));
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    public ProblemDetail handleUnauthorized(UnauthorizedException ex) {
-        ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
-        detail.setTitle("Unauthorized");
-        detail.setProperty("timestamp", Instant.now());
-        return detail;
+    public ResponseEntity<Map<String, Object>> handleUnauthorized(UnauthorizedException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(errorBody(HttpStatus.UNAUTHORIZED, "Unauthorized", ex.getMessage()));
     }
 
     @ExceptionHandler(ForbiddenException.class)
-    public ProblemDetail handleForbidden(ForbiddenException ex) {
-        ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, ex.getMessage());
-        detail.setTitle("Forbidden");
-        detail.setProperty("timestamp", Instant.now());
-        return detail;
+    public ResponseEntity<Map<String, Object>> handleForbidden(ForbiddenException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(errorBody(HttpStatus.FORBIDDEN, "Forbidden", ex.getMessage()));
     }
 
     @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ProblemDetail handleEmailExists(EmailAlreadyExistsException ex) {
-        ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
-        detail.setTitle("Email Already Exists");
-        detail.setProperty("timestamp", Instant.now());
-        return detail;
+    public ResponseEntity<Map<String, Object>> handleEmailExists(EmailAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(errorBody(HttpStatus.CONFLICT, "Email Already Exists", ex.getMessage()));
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ProblemDetail handleBadCredentials(BadCredentialsException ex) {
-        ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "Invalid email or password");
-        detail.setTitle("Authentication Failed");
-        detail.setProperty("timestamp", Instant.now());
-        return detail;
+    public ResponseEntity<Map<String, Object>> handleBadCredentials(BadCredentialsException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(errorBody(HttpStatus.UNAUTHORIZED, "Authentication Failed", "Invalid email or password"));
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ProblemDetail handleAccessDenied(AccessDeniedException ex) {
-        ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, "Access denied");
-        detail.setTitle("Access Denied");
-        detail.setProperty("timestamp", Instant.now());
-        return detail;
+    public ResponseEntity<Map<String, Object>> handleAccessDenied(AccessDeniedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(errorBody(HttpStatus.FORBIDDEN, "Access Denied", "Access denied"));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ProblemDetail handleValidationErrors(MethodArgumentNotValidException ex) {
+    public ResponseEntity<Map<String, Object>> handleValidationErrors(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-        ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Validation failed");
-        detail.setTitle("Validation Error");
-        detail.setProperty("timestamp", Instant.now());
-        detail.setProperty("errors", errors);
-        return detail;
+        Map<String, Object> body = errorBody(HttpStatus.BAD_REQUEST, "Validation Error", "Validation failed");
+        body.put("errors", errors);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
     @ExceptionHandler(Exception.class)
-    public ProblemDetail handleGenericException(Exception ex) {
+    public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
         log.error("Unexpected error occurred: {}", ex.getMessage(), ex);
-        ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR,
-                "An unexpected error occurred");
-        detail.setTitle("Internal Server Error");
-        detail.setProperty("timestamp", Instant.now());
-        return detail;
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(errorBody(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", "An unexpected error occurred"));
     }
 }

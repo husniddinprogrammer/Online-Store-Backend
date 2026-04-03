@@ -1,11 +1,11 @@
 package husniddin.online_store.entity;
 
 import husniddin.online_store.enums.OrderStatus;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @SQLDelete(sql = "UPDATE orders SET is_deleted = true WHERE id = ?")
-@SQLRestriction("is_deleted = false")
+@Where(clause = "is_deleted = false")
 @Getter
 @Setter
 @NoArgsConstructor

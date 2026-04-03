@@ -1,6 +1,6 @@
 package husniddin.online_store.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;

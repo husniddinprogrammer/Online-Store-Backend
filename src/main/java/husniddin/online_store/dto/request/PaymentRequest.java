@@ -1,7 +1,7 @@
 package husniddin.online_store.dto.request;
 
 import husniddin.online_store.enums.PayMethod;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data

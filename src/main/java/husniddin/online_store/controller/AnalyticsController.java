@@ -32,14 +32,11 @@ public class AnalyticsController {
     @GetMapping
     @Operation(
             summary = "Get admin analytics",
-            description = """
-                    Returns aggregated metrics for the selected period.
-
-                    - **DAILY** — today
-                    - **WEEKLY** — last 7 days
-                    - **MONTHLY** — last 30 days
-                    - **CUSTOM** — requires `fromDate` and `toDate` (format: `yyyy-MM-dd`)
-                    """
+            description = "Returns aggregated metrics for the selected period. " +
+                    "DAILY — today. " +
+                    "WEEKLY — last 7 days. " +
+                    "MONTHLY — last 30 days. " +
+                    "CUSTOM — requires fromDate and toDate (format: yyyy-MM-dd)."
     )
     public ResponseEntity<ApiResponse<AnalyticsResponse>> getAnalytics(
             @Parameter(description = "Period type", example = "DAILY")

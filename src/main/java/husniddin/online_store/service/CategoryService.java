@@ -8,8 +8,6 @@ import husniddin.online_store.exception.ResourceNotFoundException;
 import husniddin.online_store.mapper.CategoryMapper;
 import husniddin.online_store.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,7 +24,6 @@ public class CategoryService {
     private final FileStorageService fileStorageService;
 
     @Transactional(readOnly = true)
-    @Cacheable("categories")
     public Page<CategoryResponse> getAll(Pageable pageable) {
         return categoryRepository.findAll(pageable).map(categoryMapper::toResponse);
     }
@@ -36,7 +33,6 @@ public class CategoryService {
         return categoryMapper.toResponse(findById(id));
     }
 
-    @CacheEvict(value = "categories", allEntries = true)
     public CategoryResponse create(CategoryRequest request, MultipartFile image) {
         if (categoryRepository.existsByName(request.getName())) {
             throw new BadRequestException("Category already exists: " + request.getName());
@@ -49,7 +45,6 @@ public class CategoryService {
         return categoryMapper.toResponse(categoryRepository.save(category));
     }
 
-    @CacheEvict(value = "categories", allEntries = true)
     public CategoryResponse update(Long id, CategoryRequest request, MultipartFile image) {
         Category category = findById(id);
         category.setName(request.getName());
@@ -59,7 +54,6 @@ public class CategoryService {
         return categoryMapper.toResponse(categoryRepository.save(category));
     }
 
-    @CacheEvict(value = "categories", allEntries = true)
     public void delete(Long id) {
         Category category = findById(id);
         category.setDeleted(true);

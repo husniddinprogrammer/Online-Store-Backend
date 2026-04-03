@@ -8,24 +8,25 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final CustomUserDetailsService userDetailsService;
+    private final CorsConfigurationSource corsConfigurationSource;
 
     private static final String[] PUBLIC_URLS = {
             "/api/auth/**",
@@ -38,50 +39,49 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/swagger-ui.html",
             "/api-docs/**",
-            "/v3/api-docs/**",
-            // WebSocket handshake (SockJS uses multiple sub-paths under /ws)
-            "/ws/**"
+            "/v3/api-docs/**"
     };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(AbstractHttpConfigurer::disable)
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(PUBLIC_URLS).permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+            .cors().configurationSource(corsConfigurationSource)
+            .and()
+            .csrf().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authorizeRequests()
+                .antMatchers(PUBLIC_URLS).permitAll()
+                .antMatchers(HttpMethod.GET, "/api/products/**").permitAll()
 
                 // ── Global write-method block: VIEWER may not call POST/PUT/DELETE/PATCH ──
-                .requestMatchers(HttpMethod.POST,   "/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY")
-                .requestMatchers(HttpMethod.PUT,    "/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY")
-                .requestMatchers(HttpMethod.DELETE, "/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY")
-                .requestMatchers(HttpMethod.PATCH,  "/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY")
+                .antMatchers(HttpMethod.POST,   "/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY")
+                .antMatchers(HttpMethod.PUT,    "/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY")
+                .antMatchers(HttpMethod.DELETE, "/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY")
+                .antMatchers(HttpMethod.PATCH,  "/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY")
 
                 // ── Route-level access (GET for all, writes already blocked above for VIEWER) ──
-                .requestMatchers("/api/users/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY", "VIEWER")
-                .requestMatchers("/api/orders/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY", "VIEWER")
-                .requestMatchers("/api/admin/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "VIEWER")
-                .requestMatchers("/api/carts/**").hasAnyRole("CUSTOMER", "VIEWER")
-                .requestMatchers("/api/favorite-products/**").hasAnyRole("CUSTOMER", "ADMIN", "VIEWER")
-                .requestMatchers("/api/notifications/**").authenticated()
-                .requestMatchers("/api/addresses/**").authenticated()
+                .antMatchers("/api/users/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY", "VIEWER")
+                .antMatchers("/api/orders/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "CUSTOMER", "DELIVERY", "VIEWER")
+                .antMatchers("/api/admin/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "VIEWER")
+                .antMatchers("/api/carts/**").hasAnyRole("CUSTOMER", "VIEWER")
+                .antMatchers("/api/favorite-products/**").hasAnyRole("CUSTOMER", "ADMIN", "VIEWER")
+                .antMatchers("/api/notifications/**").authenticated()
+                .antMatchers("/api/addresses/**").authenticated()
 
                 // ── Admin-only write operations (belt-and-suspenders after global block) ──
-                .requestMatchers(HttpMethod.POST,   "/api/categories/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers(HttpMethod.PUT,    "/api/categories/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/categories/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers(HttpMethod.POST,   "/api/companies/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers(HttpMethod.PUT,    "/api/companies/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/companies/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers(HttpMethod.POST,   "/api/products/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers(HttpMethod.PUT,    "/api/products/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .requestMatchers("/api/posters/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .antMatchers(HttpMethod.POST,   "/api/categories/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .antMatchers(HttpMethod.PUT,    "/api/categories/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/categories/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .antMatchers(HttpMethod.POST,   "/api/companies/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .antMatchers(HttpMethod.PUT,    "/api/companies/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/companies/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .antMatchers(HttpMethod.POST,   "/api/products/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .antMatchers(HttpMethod.PUT,    "/api/products/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/products/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
 
                 .anyRequest().authenticated()
-            )
+            .and()
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

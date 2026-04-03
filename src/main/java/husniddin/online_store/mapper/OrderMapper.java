@@ -7,9 +7,8 @@ import husniddin.online_store.entity.OrderItem;
 import husniddin.online_store.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {AddressMapper.class})
+@Mapper(componentModel = "spring", uses = {AddressMapper.class})
 public interface OrderMapper {
 
     @Mapping(target = "userId", source = "user.id")

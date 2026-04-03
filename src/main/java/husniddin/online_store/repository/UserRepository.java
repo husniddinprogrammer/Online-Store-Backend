@@ -2,7 +2,7 @@ package husniddin.online_store.repository;
 
 import husniddin.online_store.entity.User;
 import husniddin.online_store.enums.Role;
-import jakarta.persistence.LockModeType;
+import javax.persistence.LockModeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,9 +29,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     /** Used by admins: excludes roles the caller must not see. */
     @Query("SELECT u FROM User u WHERE " +
            "u.role NOT IN :excludedRoles AND " +
-           "(:search IS NULL OR LOWER(u.name) LIKE LOWER(CONCAT('%', cast(:search as String), '%')) " +
-           "OR LOWER(u.surname) LIKE LOWER(CONCAT('%', cast(:search as String), '%')) " +
-           "OR LOWER(u.email) LIKE LOWER(CONCAT('%', cast(:search as String), '%')))")
+           "(:search IS NULL OR LOWER(u.name) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(u.surname) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(u.email) LIKE LOWER(CONCAT('%', :search, '%')))")
     Page<User> searchUsersExcluding(
             @Param("search") String search,
             @Param("excludedRoles") Collection<Role> excludedRoles,
