@@ -1863,3 +1863,652 @@ Caused by: java.lang.ClassNotFoundException: JwtAuthenticationFilter
 2026-04-03 16:49:16 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
 2026-04-03 16:49:16 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
 2026-04-03 16:49:16 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 16:57:21 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 16:57:21 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-03 16:57:21 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-03 21:00:42 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 18936 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:00:42 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:00:42 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:00:43 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:00:44 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 120 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:00:45 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:00:45 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:00:45 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:00:45 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:00:45 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2527 ms
+2026-04-03 21:00:45 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:00:45 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:00:45 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:00:45 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:00:45 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:00:45 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:00:45 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:00:46 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:00:46 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:00:46 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:00:46 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:00:46 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:00:46 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:00:46 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:00:46 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:00:46 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:00:47 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:00:47 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:00:48 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:00:49 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3051e476, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1870b9b8, org.springframework.security.web.context.SecurityContextPersistenceFilter@14b96c1e, org.springframework.security.web.header.HeaderWriterFilter@6e8aea7e, org.springframework.web.filter.CorsFilter@6d9ee75a, org.springframework.security.web.authentication.logout.LogoutFilter@6a5c2d2d, husniddin.online_store.security.JwtAuthenticationFilter@24ac6fef, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@664254b6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2e4d2232, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@9825465, org.springframework.security.web.session.SessionManagementFilter@da9374c, org.springframework.security.web.access.ExceptionTranslationFilter@767d9b9, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6719f206]
+2026-04-03 21:00:50 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-03 21:00:50 [main] INFO  h.o.OnlineStoreApplication - Started OnlineStoreApplication in 8.39 seconds (JVM running for 8.75)
+2026-04-03 21:00:50 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
+2026-04-03 21:00:50 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
+2026-04-03 21:00:50 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 21:01:29 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 21:01:29 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 21:01:29 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-04-03 21:02:04 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 12836 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:02:04 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:02:04 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:02:05 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:02:05 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 139 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:02:06 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:02:06 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:02:06 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:02:06 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:02:06 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2101 ms
+2026-04-03 21:02:06 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:02:06 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:02:06 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:02:06 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:02:06 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:02:06 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:02:06 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:02:06 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:02:06 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:02:07 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:02:07 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:02:07 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:02:07 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:02:07 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:02:07 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:02:07 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:02:08 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:02:08 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:02:09 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:02:10 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@297dff3a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@30437e9c, org.springframework.security.web.context.SecurityContextPersistenceFilter@6b52a40, org.springframework.security.web.header.HeaderWriterFilter@5444f1c3, org.springframework.web.filter.CorsFilter@2e057637, org.springframework.security.web.authentication.logout.LogoutFilter@61c145cb, husniddin.online_store.security.JwtAuthenticationFilter@60b553f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1e4c4fda, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@903c13, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@762f8ff6, org.springframework.security.web.session.SessionManagementFilter@3ca6bd01, org.springframework.security.web.access.ExceptionTranslationFilter@1cfd6f63, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6a3e633a]
+2026-04-03 21:02:10 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-03 21:02:10 [main] INFO  h.o.OnlineStoreApplication - Started OnlineStoreApplication in 7.048 seconds (JVM running for 7.408)
+2026-04-03 21:02:10 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
+2026-04-03 21:02:10 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
+2026-04-03 21:02:10 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 21:02:14 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 21:02:14 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 21:02:14 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2026-04-03 21:03:15 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 17260 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:03:15 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:03:15 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:03:17 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:03:17 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 207 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:03:18 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:03:18 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:03:18 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:03:18 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:03:18 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2983 ms
+2026-04-03 21:03:18 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:03:18 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:03:18 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:03:18 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:03:19 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:03:20 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:03:20 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:03:20 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:03:20 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:03:20 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:03:20 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:03:20 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:03:20 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:03:20 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:03:20 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:03:20 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:03:21 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:03:21 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:03:22 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:03:23 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@30437e9c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2e057637, org.springframework.security.web.context.SecurityContextPersistenceFilter@178ba69f, org.springframework.security.web.header.HeaderWriterFilter@6a5c2d2d, org.springframework.web.filter.CorsFilter@762f8ff6, org.springframework.security.web.authentication.logout.LogoutFilter@153409b8, husniddin.online_store.security.JwtAuthenticationFilter@2aa811f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2f58f492, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4ae5ddc0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@30ed2a26, org.springframework.security.web.session.SessionManagementFilter@5acd7d1c, org.springframework.security.web.access.ExceptionTranslationFilter@1906f982, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@41abee65]
+2026-04-03 21:03:23 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+2026-04-03 21:03:23 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:03:23 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-03 21:03:23 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-03 21:03:23 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2026-04-03 21:03:23 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2026-04-03 21:03:23 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2026-04-03 21:04:09 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:04:09 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-03 21:04:09 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-03 21:04:12 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 8604 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:04:12 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:04:12 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:04:13 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:04:13 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 108 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:04:14 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:04:14 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:04:14 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:04:14 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:04:14 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1955 ms
+2026-04-03 21:04:14 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:04:14 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:04:14 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:04:14 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:04:14 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:04:14 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:04:14 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:04:14 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:04:14 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:04:15 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:04:15 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:04:15 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:04:15 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:04:15 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:04:15 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:04:15 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:04:16 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:04:16 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:04:16 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:04:17 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3b1137b0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@21ba0d33, org.springframework.security.web.context.SecurityContextPersistenceFilter@727f36dd, org.springframework.security.web.header.HeaderWriterFilter@664254b6, org.springframework.web.filter.CorsFilter@afb7b03, org.springframework.security.web.authentication.logout.LogoutFilter@2f58f492, husniddin.online_store.security.JwtAuthenticationFilter@2aa811f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@ae74eef, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2e91cf69, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4fd63c43, org.springframework.security.web.session.SessionManagementFilter@71eafb64, org.springframework.security.web.access.ExceptionTranslationFilter@14b96c1e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@912747d]
+2026-04-03 21:04:18 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-03 21:04:18 [main] INFO  h.o.OnlineStoreApplication - Started OnlineStoreApplication in 6.457 seconds (JVM running for 6.753)
+2026-04-03 21:04:18 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
+2026-04-03 21:04:18 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
+2026-04-03 21:04:18 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 21:04:24 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 21:04:24 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 21:04:24 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-03 21:06:06 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 18036 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:06:06 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:06:06 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:06:07 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:06:07 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 129 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:06:08 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:06:08 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:06:08 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:06:08 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:06:08 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2109 ms
+2026-04-03 21:06:08 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:06:08 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:06:08 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:06:08 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:06:08 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:06:08 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:06:08 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:06:08 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:06:08 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:06:08 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:06:09 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:06:09 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:06:09 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:06:09 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:06:09 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:06:09 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:06:10 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:06:10 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:06:11 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:06:12 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@912747d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@78ea700f, org.springframework.security.web.context.SecurityContextPersistenceFilter@229514ff, org.springframework.security.web.header.HeaderWriterFilter@59282dc6, org.springframework.web.filter.CorsFilter@cd93621, org.springframework.security.web.authentication.logout.LogoutFilter@5acd7d1c, husniddin.online_store.security.JwtAuthenticationFilter@b56d8a7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@714b6999, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@24f5e9e8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3b1137b0, org.springframework.security.web.session.SessionManagementFilter@34647f58, org.springframework.security.web.access.ExceptionTranslationFilter@593f7d2e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2aeb7c4c]
+2026-04-03 21:06:12 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+2026-04-03 21:06:12 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:06:12 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-03 21:06:12 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-03 21:06:12 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2026-04-03 21:06:12 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2026-04-03 21:06:12 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2026-04-03 21:06:17 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:06:17 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-03 21:06:17 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-03 21:06:20 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 15156 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:06:20 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:06:20 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:06:21 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:06:21 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 115 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:06:22 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:06:22 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:06:22 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:06:22 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:06:22 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2054 ms
+2026-04-03 21:06:22 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:06:22 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:06:22 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:06:22 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:06:23 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:06:23 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:06:23 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:06:23 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:06:23 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:06:23 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:06:23 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:06:23 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:06:23 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:06:23 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:06:23 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:06:23 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:06:24 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:06:24 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:06:25 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:06:26 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6fc6f68f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@297dff3a, org.springframework.security.web.context.SecurityContextPersistenceFilter@3ca6bd01, org.springframework.security.web.header.HeaderWriterFilter@1cfd6f63, org.springframework.web.filter.CorsFilter@30437e9c, org.springframework.security.web.authentication.logout.LogoutFilter@55f23335, husniddin.online_store.security.JwtAuthenticationFilter@2aa811f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6b52a40, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1e4c4fda, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2e057637, org.springframework.security.web.session.SessionManagementFilter@442310fd, org.springframework.security.web.access.ExceptionTranslationFilter@c683cf5, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@60b4d934]
+2026-04-03 21:06:26 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-03 21:06:26 [main] INFO  h.o.OnlineStoreApplication - Started OnlineStoreApplication in 6.774 seconds (JVM running for 7.091)
+2026-04-03 21:06:26 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
+2026-04-03 21:06:26 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
+2026-04-03 21:06:26 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 21:06:31 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 21:06:31 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 21:06:31 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-03 21:06:52 [http-nio-8080-exec-3] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 1161 ms
+2026-04-03 21:11:48 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 13668 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:11:48 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:11:48 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:11:49 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:11:49 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 113 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:11:50 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:11:50 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:11:50 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:11:50 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:11:50 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2102 ms
+2026-04-03 21:11:50 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:11:50 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:11:50 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:11:50 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:11:50 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:11:50 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:11:50 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:11:50 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:11:50 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:11:51 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:11:51 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:11:51 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:11:51 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:11:51 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:11:51 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:11:51 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:11:52 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:11:52 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:11:53 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:11:54 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@23d23d98, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1fd35a92, org.springframework.security.web.context.SecurityContextPersistenceFilter@37665305, org.springframework.security.web.header.HeaderWriterFilter@3d50a3d9, org.springframework.web.filter.CorsFilter@40db6136, org.springframework.security.web.authentication.logout.LogoutFilter@3ba1f56e, husniddin.online_store.security.JwtAuthenticationFilter@2aa811f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2c224096, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1906f982, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5ced0537, org.springframework.security.web.session.SessionManagementFilter@2e91cf69, org.springframework.security.web.access.ExceptionTranslationFilter@50e6ee24, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7d483ebe]
+2026-04-03 21:11:55 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-03 21:11:55 [main] INFO  h.o.OnlineStoreApplication - Started OnlineStoreApplication in 7.349 seconds (JVM running for 7.656)
+2026-04-03 21:11:55 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
+2026-04-03 21:11:55 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
+2026-04-03 21:11:55 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 21:11:58 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 21:11:58 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 21:11:58 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-03 21:12:26 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 6980 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:12:26 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:12:26 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:12:27 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:12:27 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 120 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:12:28 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:12:28 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:12:28 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:12:28 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:12:28 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2087 ms
+2026-04-03 21:12:28 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:12:28 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:12:28 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:12:28 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:12:29 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:12:29 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:12:29 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:12:29 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:12:29 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:12:29 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:12:29 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:12:29 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:12:29 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:12:29 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:12:29 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:12:29 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:12:30 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:12:30 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:12:31 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:12:32 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6b630d4b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@70aa03c0, org.springframework.security.web.context.SecurityContextPersistenceFilter@5444f1c3, org.springframework.security.web.header.HeaderWriterFilter@727f36dd, org.springframework.web.filter.CorsFilter@44da745f, org.springframework.security.web.authentication.logout.LogoutFilter@76134251, husniddin.online_store.security.JwtAuthenticationFilter@2aa811f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1dadd172, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4070c4ff, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2435c6ae, org.springframework.security.web.session.SessionManagementFilter@1cfd6f63, org.springframework.security.web.access.ExceptionTranslationFilter@71eafb64, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@40db6136]
+2026-04-03 21:12:33 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-03 21:12:33 [main] INFO  h.o.OnlineStoreApplication - Started OnlineStoreApplication in 7.211 seconds (JVM running for 7.505)
+2026-04-03 21:12:33 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
+2026-04-03 21:12:33 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
+2026-04-03 21:12:33 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 21:12:34 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 21:12:34 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 21:12:34 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2026-04-03 21:13:25 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 20532 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:13:25 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:13:25 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:13:26 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:13:26 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 109 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:13:27 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:13:27 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:13:27 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:13:27 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:13:27 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2017 ms
+2026-04-03 21:13:27 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:13:27 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:13:27 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:13:27 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:13:27 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:13:27 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:13:27 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:13:28 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:13:28 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:13:28 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:13:28 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:13:28 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:13:28 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:13:28 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:13:28 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:13:28 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:13:29 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:13:29 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:13:30 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:13:31 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6fc6f68f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@297dff3a, org.springframework.security.web.context.SecurityContextPersistenceFilter@3ca6bd01, org.springframework.security.web.header.HeaderWriterFilter@1cfd6f63, org.springframework.web.filter.CorsFilter@30437e9c, org.springframework.security.web.authentication.logout.LogoutFilter@55f23335, husniddin.online_store.security.JwtAuthenticationFilter@2aa811f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6b52a40, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1e4c4fda, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2e057637, org.springframework.security.web.session.SessionManagementFilter@442310fd, org.springframework.security.web.access.ExceptionTranslationFilter@c683cf5, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@60b4d934]
+2026-04-03 21:13:31 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-03 21:13:31 [main] INFO  h.o.OnlineStoreApplication - Started OnlineStoreApplication in 6.957 seconds (JVM running for 7.328)
+2026-04-03 21:13:31 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
+2026-04-03 21:13:31 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
+2026-04-03 21:13:31 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 21:13:38 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 21:13:38 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 21:13:38 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-04-03 21:14:13 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 18524 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:14:13 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:14:13 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:14:14 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:14:14 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 111 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:14:14 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:14:15 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:14:15 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:14:15 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:14:15 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2034 ms
+2026-04-03 21:14:15 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:14:15 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:14:15 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:14:15 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:14:15 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:14:15 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:14:15 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:14:15 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:14:15 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:14:15 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:14:15 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:14:16 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:14:16 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:14:16 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:14:16 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:14:16 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:14:16 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:14:16 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:14:17 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:14:18 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5ced0537, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6ee1ddcf, org.springframework.security.web.context.SecurityContextPersistenceFilter@1cfd6f63, org.springframework.security.web.header.HeaderWriterFilter@71eafb64, org.springframework.web.filter.CorsFilter@6b630d4b, org.springframework.security.web.authentication.logout.LogoutFilter@59ac77f9, husniddin.online_store.security.JwtAuthenticationFilter@2aa811f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5444f1c3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1dadd172, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@70aa03c0, org.springframework.security.web.session.SessionManagementFilter@c683cf5, org.springframework.security.web.access.ExceptionTranslationFilter@3661b732, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@23d23d98]
+2026-04-03 21:14:19 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-03 21:14:19 [main] INFO  h.o.OnlineStoreApplication - Started OnlineStoreApplication in 6.428 seconds (JVM running for 6.78)
+2026-04-03 21:14:19 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
+2026-04-03 21:14:19 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
+2026-04-03 21:14:19 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 21:14:28 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 21:14:28 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 21:14:28 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-03 21:15:11 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 4248 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:15:11 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:15:11 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:15:13 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:15:13 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 119 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:15:14 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:15:14 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:15:14 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:15:14 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:15:14 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2279 ms
+2026-04-03 21:15:14 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:15:14 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:15:14 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:15:14 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:15:14 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:15:14 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:15:14 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:15:14 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:15:14 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:15:15 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:15:15 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:15:15 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:15:15 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:15:15 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:15:15 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:15:15 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:15:16 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:15:16 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:15:17 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:15:17 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6d9ee75a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@9825465, org.springframework.security.web.context.SecurityContextPersistenceFilter@229514ff, org.springframework.security.web.header.HeaderWriterFilter@59282dc6, org.springframework.web.filter.CorsFilter@36cf6377, org.springframework.security.web.authentication.logout.LogoutFilter@1dadd172, husniddin.online_store.security.JwtAuthenticationFilter@2aa811f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@714b6999, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@24f5e9e8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2befb16f, org.springframework.security.web.session.SessionManagementFilter@34647f58, org.springframework.security.web.access.ExceptionTranslationFilter@593f7d2e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@344a065a]
+2026-04-03 21:15:18 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-03 21:15:18 [main] INFO  h.o.OnlineStoreApplication - Started OnlineStoreApplication in 7.149 seconds (JVM running for 7.465)
+2026-04-03 21:15:18 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
+2026-04-03 21:15:18 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
+2026-04-03 21:15:18 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 21:15:24 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 21:15:24 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 21:15:24 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-04-03 21:16:12 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 16048 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:16:12 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:16:12 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:16:13 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:16:13 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 112 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:16:14 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:16:14 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:16:14 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:16:14 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:16:14 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2061 ms
+2026-04-03 21:16:14 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:16:14 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:16:14 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:16:14 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:16:14 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:16:14 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:16:14 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:16:15 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:16:15 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:16:15 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:16:15 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:16:15 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:16:15 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:16:15 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:16:15 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:16:15 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:16:16 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:16:16 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:16:17 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:16:17 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7cf66cf9, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@38f63756, org.springframework.security.web.context.SecurityContextPersistenceFilter@79ee779c, org.springframework.security.web.header.HeaderWriterFilter@12f3fcd, org.springframework.web.filter.CorsFilter@3d7caf9c, org.springframework.security.web.authentication.logout.LogoutFilter@76e2a621, husniddin.online_store.security.JwtAuthenticationFilter@6585df70, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@27a6384b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@23365142, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4e26040f, org.springframework.security.web.session.SessionManagementFilter@153409b8, org.springframework.security.web.access.ExceptionTranslationFilter@4177d422, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6c851821]
+2026-04-03 21:16:18 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-03 21:16:18 [main] INFO  h.o.OnlineStoreApplication - Started OnlineStoreApplication in 6.601 seconds (JVM running for 6.908)
+2026-04-03 21:16:18 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
+2026-04-03 21:16:18 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
+2026-04-03 21:16:18 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 21:16:21 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 21:16:21 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 21:16:21 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2026-04-03 21:18:43 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 18916 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:18:43 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:18:43 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:18:44 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:18:44 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 127 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:18:45 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:18:45 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:18:45 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:18:45 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:18:45 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2127 ms
+2026-04-03 21:18:46 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:18:46 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:18:46 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:18:46 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:18:46 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:18:46 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:18:46 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:18:46 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:18:46 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:18:46 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:18:46 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:18:46 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:18:47 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:18:47 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:18:47 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:18:47 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:18:47 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:18:47 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:18:48 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:18:49 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@30437e9c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2e057637, org.springframework.security.web.context.SecurityContextPersistenceFilter@6b52a40, org.springframework.security.web.header.HeaderWriterFilter@5444f1c3, org.springframework.web.filter.CorsFilter@762f8ff6, org.springframework.security.web.authentication.logout.LogoutFilter@61c145cb, husniddin.online_store.security.JwtAuthenticationFilter@2aa811f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1e4c4fda, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@903c13, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@30ed2a26, org.springframework.security.web.session.SessionManagementFilter@3ca6bd01, org.springframework.security.web.access.ExceptionTranslationFilter@1cfd6f63, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@41abee65]
+2026-04-03 21:18:50 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-03 21:18:50 [main] INFO  h.o.OnlineStoreApplication - Started OnlineStoreApplication in 6.737 seconds (JVM running for 7.047)
+2026-04-03 21:18:50 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
+2026-04-03 21:18:50 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
+2026-04-03 21:18:50 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 21:19:00 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 21:19:00 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 21:19:00 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-04-03 21:19:32 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 19816 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:19:32 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:19:32 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:19:33 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:19:33 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 129 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:19:34 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:19:34 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:19:34 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:19:34 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:19:34 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2125 ms
+2026-04-03 21:19:34 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:19:34 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:19:34 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:19:34 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:19:34 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:19:34 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:19:35 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:19:35 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:19:35 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:19:35 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:19:35 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:19:35 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:19:35 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:19:35 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:19:35 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:19:35 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:19:36 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:19:36 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:19:37 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:19:38 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1e406cbe, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@141a10bf, org.springframework.security.web.context.SecurityContextPersistenceFilter@4ae5ddc0, org.springframework.security.web.header.HeaderWriterFilter@4bceac99, org.springframework.web.filter.CorsFilter@4dffa400, org.springframework.security.web.authentication.logout.LogoutFilter@27a6384b, husniddin.online_store.security.JwtAuthenticationFilter@2aa811f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5ebfe7fa, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3ba1f56e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5e34a84b, org.springframework.security.web.session.SessionManagementFilter@2f58f492, org.springframework.security.web.access.ExceptionTranslationFilter@33c9f1ac, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@762f8ff6]
+2026-04-03 21:19:38 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-03 21:19:38 [main] INFO  h.o.OnlineStoreApplication - Started OnlineStoreApplication in 6.969 seconds (JVM running for 7.264)
+2026-04-03 21:19:38 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
+2026-04-03 21:19:38 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
+2026-04-03 21:19:38 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 21:19:41 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 21:19:41 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 21:19:41 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2026-04-03 21:20:22 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 5468 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:20:22 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:20:22 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:20:23 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:20:23 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 107 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:20:24 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:20:24 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:20:24 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:20:24 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:20:24 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1859 ms
+2026-04-03 21:20:24 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:20:24 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:20:24 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:20:24 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:20:25 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:20:25 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:20:25 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:20:25 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:20:25 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:20:25 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:20:25 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:20:25 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:20:25 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:20:26 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:20:26 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:20:26 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:20:26 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:20:26 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:20:27 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:20:28 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@23d23d98, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1fd35a92, org.springframework.security.web.context.SecurityContextPersistenceFilter@37665305, org.springframework.security.web.header.HeaderWriterFilter@3d50a3d9, org.springframework.web.filter.CorsFilter@40db6136, org.springframework.security.web.authentication.logout.LogoutFilter@3ba1f56e, husniddin.online_store.security.JwtAuthenticationFilter@2aa811f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2c224096, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1906f982, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5ced0537, org.springframework.security.web.session.SessionManagementFilter@2e91cf69, org.springframework.security.web.access.ExceptionTranslationFilter@50e6ee24, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7d483ebe]
+2026-04-03 21:20:28 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-03 21:20:28 [main] INFO  h.o.OnlineStoreApplication - Started OnlineStoreApplication in 6.294 seconds (JVM running for 6.625)
+2026-04-03 21:20:28 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
+2026-04-03 21:20:28 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
+2026-04-03 21:20:28 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 21:20:33 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 21:20:33 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 21:20:33 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-04-03 21:20:46 [main] INFO  h.o.OnlineStoreApplication - Starting OnlineStoreApplication using Java 1.8.0_251 on Husniddin with PID 6980 (C:\Users\User\Desktop\online-store\online-store\target\classes started by User in C:\Users\User\Desktop\online-store\online-store)
+2026-04-03 21:20:46 [main] DEBUG h.o.OnlineStoreApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 21:20:46 [main] INFO  h.o.OnlineStoreApplication - The following 1 profile is active: "dev"
+2026-04-03 21:20:47 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-03 21:20:47 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 119 ms. Found 16 JPA repository interfaces.
+2026-04-03 21:20:48 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 21:20:48 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 21:20:48 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 21:20:48 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-03 21:20:48 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2145 ms
+2026-04-03 21:20:48 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 8.5.13 by Redgate
+2026-04-03 21:20:48 [main] INFO  o.f.c.i.license.VersionPrinter - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2026-04-03 21:20:48 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2026-04-03 21:20:48 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-03 21:20:48 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-03 21:20:48 [main] INFO  o.f.c.i.d.base.BaseDatabaseType - Database: jdbc:postgresql://localhost:5432/online_store_dev (PostgreSQL 16.13)
+2026-04-03 21:20:48 [main] WARN  o.f.c.i.database.base.Database - Flyway upgrade recommended: PostgreSQL 16.13 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2026-04-03 21:20:49 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-04-03 21:20:49 [main] INFO  o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-04-03 21:20:49 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-03 21:20:49 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-04-03 21:20:49 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-04-03 21:20:49 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2026-04-03 21:20:49 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [product] association in the [husniddin.online_store.entity.OrderItem] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:20:49 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [category] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:20:49 [main] WARN  org.hibernate.cfg.AnnotationBinder - HHH000491: The [company] association in the [husniddin.online_store.entity.Product] entity uses both @NotFound(action = NotFoundAction.IGNORE) and FetchType.LAZY. The NotFoundAction.IGNORE @ManyToOne and @OneToOne associations are always fetched eagerly.
+2026-04-03 21:20:50 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-03 21:20:50 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:20:51 [main] DEBUG h.o.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 21:20:51 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@9825465, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@36cf6377, org.springframework.security.web.context.SecurityContextPersistenceFilter@664254b6, org.springframework.security.web.header.HeaderWriterFilter@603b9d4b, org.springframework.web.filter.CorsFilter@2befb16f, org.springframework.security.web.authentication.logout.LogoutFilter@33c9f1ac, husniddin.online_store.security.JwtAuthenticationFilter@2aa811f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2e4d2232, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@50e6ee24, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3151277f, org.springframework.security.web.session.SessionManagementFilter@14b96c1e, org.springframework.security.web.access.ExceptionTranslationFilter@6e8aea7e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3051e476]
+2026-04-03 21:20:52 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-03 21:20:52 [main] INFO  h.o.OnlineStoreApplication - Started OnlineStoreApplication in 6.709 seconds (JVM running for 7.081)
+2026-04-03 21:20:52 [main] INFO  h.online_store.config.DataSeeder - Starting data seeding...
+2026-04-03 21:20:52 [main] DEBUG h.online_store.config.DataSeeder - SUPER_ADMIN already exists: admin@online-store.uz
+2026-04-03 21:20:52 [main] INFO  h.online_store.config.DataSeeder - Data seeding completed successfully
+2026-04-03 21:21:08 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 21:21:08 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 21:21:08 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-04-03 21:22:03 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-03 21:22:03 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-03 21:22:03 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
