@@ -67,6 +67,7 @@ public class SecurityConfig {
                 .antMatchers("/api/admin/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "VIEWER")
                 .antMatchers("/api/carts/**").hasAnyRole("CUSTOMER", "VIEWER")
                 .antMatchers("/api/favorite-products/**").hasAnyRole("CUSTOMER", "ADMIN", "VIEWER")
+                .antMatchers("/actuator/shutdown").hasRole("SUPER_ADMIN")
                 .antMatchers("/api/notifications/**").authenticated()
                 .antMatchers("/api/addresses/**").authenticated()
 

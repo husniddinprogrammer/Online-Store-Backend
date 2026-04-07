@@ -22,10 +22,14 @@ public class FileController {
     @GetMapping("/upload/**")
     public ResponseEntity<Resource> getFile(HttpServletRequest request) throws IOException {
         System.out.println("keldi");
+        System.out.println(baseDir);
         String path = request.getRequestURI().replaceFirst("/home/onlinest/java/uploads/", "");
-        File file = new File(baseDir + "/" + path);
-
+        System.out.println(path);
+        String filePath = baseDir + "/" + path;
+        File file = new File(filePath.replace("upload/", ""));
+        System.out.println(file.getPath());
         if (!file.exists() || !file.isFile()) {
+            System.out.println("yo'q");
             return ResponseEntity.notFound().build();
         }
 

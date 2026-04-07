@@ -70,7 +70,7 @@ app:
   email-verification-expiry-hours: 24
   password-reset-expiry-minutes: 500
   upload:
-    base-dir: ${UPLOAD_BASE_DIR:java/uploads}          # root upload directory; subdirs: products, categories, companies
+    base-dir: ${UPLOAD_BASE_DIR:uploads}          # root upload directory; subdirs: products, categories, companies
     base-url: ${BASE_URL:http://localhost:8080}   # used to build public image URLs
     max-file-size-mb: ${UPLOAD_MAX_FILE_SIZE_MB:3}
   seed:
@@ -80,6 +80,15 @@ app:
     admin-name: ${ADMIN_NAME:Super}
     admin-surname: ${ADMIN_SURNAME:Admin}
     admin-phone: ${ADMIN_PHONE:+998901234567}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: shutdown
+  endpoint:
+    shutdown:
+      enabled: true
 
 springdoc:
   api-docs:
